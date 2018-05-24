@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ipplus360.dao.PayConfirmDao">
+
+    <insert id="insert" parameterType="payConfirm"  useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO ipplus360_admin.pay_confirm 	(user_id, order_serial, date_created, date_updated, token_ids, counts, bank, bank_account, price, payment_method, payee, description)
+	    VALUES 	(#{userId}, #{orderSerial}, #{dateCreated}, #{dateUpdated}, #{tokenIdsStr}, #{counts}, #{bank}, #{bankAccount}, #{price}, #{paymentMethod}, #{payee}, #{description})
+    </insert>
+
+    <!--更新支付信息 -->
+    <update id="update" parameterType="payConfirm">
+        UPDATE ipplus360_admin.pay_confirm
+        <set>
+            <trim>
+                <if test="dateUpdated !=null">
+                    date_updated = #{dateUpdated},
+                </if>
+                <if test="tokenIdsStr !=null ">
+                    token_ids = #{tokenIdsStr,jdbcType=VARCHAR},
+                </if>
+                <if test="counts != null" >
+                    counts = #{counts, jdbcType=BIGINT}
+                </if>
+            </trim>
+        </set>
+        WHERE id = #{id}
+    </update>
+    
+</mapper>

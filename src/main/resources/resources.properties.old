@@ -1,0 +1,18 @@
+#-------- 数据文件存放目录 --------
+#download.dir=/home/aiwenmall/download
+download.dir=D:\\home\\aiwenmall\\download
+#-------- 企业认证文件存放路径 --------
+upload.dir=/home/aiwenmall/upload
+
+#logPath=D:\\w\\javaworkspace\\ipplus360mall\\src\\test\\java\\com\\ipplus360\\
+logPath=/home/aiwenmall/logs/mall/record/
+mallLogPath=/home/aiwenmall/logs/mall/
+
+logFilePath=/home/aiwenmall/logs/mall/record/record.log
+
+#email
+downloadAndBuyEmail=lijian@ipplus360.com
+
+visitAnalysisEmail=lijian@ipplus360.com
+
+wangyong=wangguoyan@ipplus360.com

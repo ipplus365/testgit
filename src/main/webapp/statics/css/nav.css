@@ -1,0 +1,95 @@
+/*头部导航栏所有样式 独立模块*/
+			.nav{
+				width: 100%;
+				height: 85px;
+				background: #fff;
+			}
+			.nav .nav_inner{
+				max-width: 1384px;
+				height: 85px;
+				margin: 0 auto;
+				/*background: red;*/
+			}
+			.nav .nav_inner .nav_inner_left{
+				float: left;
+			}
+			.nav .nav_inner li{
+				font-size: 18px;
+				list-style: none;
+				float: left;
+				height: 85px;
+				width: 134px;
+				text-align: center;
+				line-height: 85px;
+				cursor: pointer;
+				position: relative;
+			}
+			/*.nav .nav_inner li.login_box{
+				width: auto;
+			}*/
+			.nav .nav_inner li>a{
+				display: inline-block;
+				width: 100%;
+				height: 100%;
+				color: #000;
+				font-size: 18px;
+			}
+			.nav .nav_inner li>a>img{
+				vertical-align: middle;
+				margin-bottom: 2px;
+				margin-left: 5px;
+			}
+			.nav .nav_inner li .list{
+				width: 277px;
+				background: #fff;
+				font-size: 12px;
+				box-shadow: 3px 3px 3px #cccccc;
+				position: absolute;
+				z-index: 99;
+				display: none;
+			}
+			.nav .nav_inner li .list>a{
+				display: block;
+				width: 100%;
+				text-align: left;
+				height: 40px;
+				line-height: 40px;
+				color: #000;
+				font-size: 14px;
+				padding-left: 20px;
+			}
+			.nav .nav_inner li .list>a>.icon-jiantou{
+				font-size: 12px;
+				color: #0195ff;
+				margin-left: 8px;
+			}
+			.nav .nav_inner li .list>a:hover{
+				background: #0195ff;
+				color: #fff;
+			}
+			.nav .nav_inner li .list>a:hover>.icon-jiantou{
+				color: #fff;
+			}
+			/*.nav .nav_inner li.active{
+				background: #0195ff;
+			}*/
+			.nav .nav_inner li.active>a{
+				color:  #0195ff;
+			}
+			.nav .nav_inner li:hover .list{
+				display: block;
+			}
+			.nav .nav_inner li:hover{
+				background: #0195ff;
+			}
+			.nav .nav_inner li:hover>a{
+				color: #fff;
+			}
+			/*.nav .nav_inner li.login_box .list{
+				width: 100px;
+			}*/
+			.nav .nav_inner .nav_inner_right{
+				/*overflow: hidden;*/
+				float: right;
+			}
+			/*导航栏样式结束*/

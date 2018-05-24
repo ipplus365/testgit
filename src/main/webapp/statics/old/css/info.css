@@ -1,0 +1,309 @@
+a{
+    color: #666;
+}
+a:hover{
+    color: #fff;
+}
+body{
+    color: #666;
+    background:#fff;
+}
+table{
+    empty-cells: show;
+    border-spacing: 0;
+    display: table;
+}
+.topBar {
+    width: 100%;
+    height: 12px;
+    background: #f1f1f1;
+    padding: 9px 0;
+    line-height: 12px;
+    color: #ddd;
+}
+.wrap {
+    width: 1210px;
+    margin: 0 auto;
+}
+.tLeft {
+    float: left;
+}
+.ftRed {
+    color: #c81623;
+}
+.topBar span.txt {
+    color: #666;
+}
+.topBar span{
+    padding: 0 8px;
+}
+.tLeft a{
+    margin-left: 5px;
+}
+.topHd {
+    position: relative;
+    top:-60px;
+    z-index: 101;
+}
+.logo {
+    float: left;
+}
+.mt10{
+    margin-top: 10px;
+}
+.mt20{
+    margin-top: 20px;
+}
+.logo a{
+    text-decoration: none;
+}
+.logo a img{
+    width: 230px;
+    height: 65px;
+}
+.payStep {
+    float: right;
+}
+.step1, .step2 {
+    width: 500px;
+}
+.step1 dt, .step2 dt {
+    height: 20px;
+    margin-bottom: 10px;
+    background: url("../images/pay-step.png") no-repeat;
+}
+.step1 dt {
+    background-position: 0 0;
+}
+.step1 dd span, .step2 span {
+    display: inline-block;
+    width: 50%;
+    text-align: center;
+    font-size: 14px;
+}
+.step1 dd span:last-child {
+    color: #999;
+}
+h1 {
+    font: 20px "microsoft yahei","\5b8b\4f53";
+}
+.content{
+    border:none;
+    margin-top:0;
+}
+.order_detal .o_top h1 {
+    font-family: "Microsoft YaHei","SimHei";
+    font-weight: 400;
+    background: url("../images/ico_03.png") no-repeat left 15px;
+    padding-left: 30px;
+    float: left;
+    line-height: 50px;
+}
+.order_detal .order_data{
+    border-collapse: collapse;
+}
+#checkout{
+    width: 100%;
+    border: 1px solid #ddd;
+}
+tbody {
+    display: table-row-group;
+    vertical-align: middle;
+    border-color: inherit;
+}
+tr {
+    display: table-row;
+    vertical-align: inherit;
+    border-color: inherit;
+}
+.order_detal .order_data th{
+    text-align:center;
+    font-size: 13px;
+    font-family: "Microsoft YaHei","SimHei";
+    background: #f7f7f7;
+    height: 30px;
+    line-height: 30px;
+    border: #ededed 1px solid;
+
+}
+.order_detal .order_data h5{
+    background: #ededed;
+    font-size: 13px;
+    font-family: "Microsoft YaHei","SimHei";
+    padding: 5px;
+    text-align: left;
+}
+.order_detal .order_data td {
+    font-family: "宋体";
+    font-size: 12px;
+    padding: 12px 5px;
+    border-width: 1px;
+    border-style: solid;
+    border-color: rgb(237, 237, 237);
+    border-image: initial;
+}
+.order_detal .order_data td input {
+    margin: 0 3px 0 0;
+    vertical-align: middle;
+}
+#special-form .list {
+    clear: both;
+    zoom: 1;
+}
+.invoice-form .list {
+    padding: 1px 0;
+    overflow: hidden;
+    clear: both;
+}
+#consignee .list .label em, .invoice-form .list .label em {
+    margin-right: 5px;
+    color: #f60;
+    font-family: sans-serif;
+}
+#special-form .label {
+    margin-right: 10px;
+}
+.invoice-form .list .label {
+    width: 95px;
+    color: #666;
+    line-height: 26px;
+    text-align: right;
+}
+#consignee .list .label, .invoice-form .list .label {
+    width: 85px;
+    height: 26px;
+    margin-right: 5px;
+    float: left;
+    color: #666;
+    line-height: 26px;
+    text-align: right;
+}
+#consignee .textbox, .invoice-form .textbox {
+    width: 138px;
+    height: 16px;
+    border: 1px solid #ccc;
+    padding: 4px 3px;
+    font-family: Arial,"\5b8b\4f53",sans-serif;
+}
+#special-form .textbox {
+    width: 308px;
+    height: 16px;
+    border: 1px solid #CCC;
+    padding: 4px 3px;
+    font-family: Arial,"\5B8B\4F53",sans-serif;
+}
+.order_detal .order_data td input {
+    margin: 0 3px 0 0;
+    vertical-align: middle;
+}
+.checkout-steps .step-current {
+    width: 984px;
+    margin: -1px;
+    border: 3px solid #f60;
+    position: relative;
+}
+.step-stitle {
+    padding: 0 8px;
+}
+.step-stitle strong {
+    display: block;
+    border-bottom: 1px dashed #ffe6bc;
+    margin-bottom: 5px;
+    padding-bottom: 5px;
+    font-size: 14px;
+}
+.invoice-form .list .field {
+    float: left;
+}
+
+.invoice-form .list .field {
+    float: left;
+    line-height: 26px;
+}
+.full-address .textbox, .invoice-form .full-address .textbox {
+    width: 308px;
+}
+.invoice-tips li.fore1 {
+    padding-bottom: 10px;
+}
+
+.invoice-tips li {
+    line-height: 18px;
+}
+#checkout a.btn-submit, #checkout a.btn-submit:visited, #checkout a.btn-submit:hover {
+    color: #fff;
+    text-decoration: none;
+}
+#checkout .btn-submit {
+    height: 30px;
+    padding: 5px 20px;
+    border-radius: 4px;
+    font-size: 14px;
+    font-weight: 700;
+    background: #e22;
+    color: #fff;
+    outline: 0;
+    border: none;
+    cursor: pointer;
+    font-family: '宋体';
+}
+.order_detal .order_data td b {
+    color: #e43c3e;
+}
+input[type="text"]:disabled{
+     background:#fff;
+     border: none;
+}
+.paybox {
+    margin-top: 5px;
+    display: inline-block;
+    line-height: 30px;
+    float: right;
+}
+.paybox strong {
+    font-weight: bold;
+    color: #e43c3e;
+    font-size: 20px;
+    font-family: "Microsoft YaHei","SimHei";
+    vertical-align: middle;
+}
+.active_btn {
+    cursor: pointer;
+}
+
+.fr {
+    float: right;
+}
+
+.btn_pay {
+    color: #fff;
+    padding: 5px 20px;
+    border-radius: 4px;
+    font-size: 16px;
+    font-weight: 700;
+    background: #e22;
+    width: 202px;
+    display: inline-block;
+    margin: 0 15px 0 20px;
+    text-align: center;
+    line-height: 38px;
+    outline: 0;
+    border: none;
+    cursor: pointer;
+    font-family: '宋体';
+}
+.submit-check-info {
+    color: #FF6600;
+    height: 30px;
+    line-height: 30px;
+    top: -30px;
+    padding: 0 3px;
+    position: absolute;
+    right: 20px;
+    background-color: #FFFDEE;
+    border: 1px solid #EDD28B;
+}
+.disable{
+    cursor: not-allowed;
+    background: #CCCCCC;
+}

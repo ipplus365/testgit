@@ -1,0 +1,252 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+		PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ipplus360.dao.ShoppingCartDao">
+
+	<sql id="cart_column">
+		carts.*,
+		cart_item.id AS cartItem_id,
+		cart_item.carts_id,
+		cart_item.item_num,
+		cart_item.product_id,
+		cart_item.price_package_id,
+		cart_item.price AS cartItemPrice,
+		cart_item.discount/10 AS cartItemDiscount,
+		cart_item.original_price,
+		cart_item.item_type,
+		cart_item.attr_ids,
+		products.sku_id,
+		products.product_name,
+		products.icon_url,
+		products.resource_ids,
+		products.price AS productsPrice,
+		products.available,
+		products.description AS productsDescription,
+		products.pageviews,
+		products.evaluate,
+		price_package.product_id,
+		price_package.`type`,
+		price_package.amount,
+		price_package.amount_str,
+		price_package.accuracy,
+		price_package.price AS pricePackagePrice,
+		price_package.discount/10 AS discount,
+		price_package.start_date,
+		price_package.end_date,
+		price_package.description AS pricePackageDescription,
+	    price_package.total_price,
+		price_package.counts,
+		price_package.unit,
+		price_package.available AS p_available
+		<!-- accuracy.id AS accuracy_id,
+		accuracy.accuracy AS accuracys -->
+	</sql>
+
+	<sql id="cart_column1">
+		carts.id,
+		cart_item.id AS cartItem_id,
+		cart_item.carts_id
+	</sql>
+
+	<!-- 订单查询关联查询用户的resultMap，即将整个查询的结果映射到cart中 -->
+	<resultMap type="cart" id="cartsResultMap">
+		<!-- 配置要映射的订单信息，如果有多个列组成唯一标识，那需要配置多个id，
+        property指定将唯一表示映射到pojo中的哪个属性上 -->
+		<id column="id" property="id"/>
+		<result column="price" property="price"/>
+		<result column="user_id" property="userId"/>
+		<result column="status" property="status"/>
+		<result column="date_created" property="dateCreated"/>
+		<result column="date_updated" property="dateUpdated"/>
+		<result column="description" property="description"/>
+
+		<!-- 购物车明细信息，一个购物车查询出了多个订单明细，要是用collection进行映射
+        collection:对关联查询到多条记录映射到集合中
+        property:映射到cart类中的哪个属性
+        ofType:要映射到集合中pojo的属性 -->
+		<collection property="cartItems" ofType="CartItem">
+			<!-- id：订单明细的唯一标识,property:要将订单明细的唯一标识映射到Cartdetail的哪个属性 -->
+			<id column="cartItem_id" property="id"/>
+			<result column="carts_id" property="cartId"/>
+			<result column="item_num" property="itemNum"/>
+			<result column="cartItemPrice" property="price"/>
+			<result column="cartItemDiscount" property="discount"/>
+			<result column="original_price" property="originalPrice"/>
+			<result column="item_type" property="itemType"/>
+			<result column="attr_ids" property="attrIds"/>
+			<!-- 配置要映射关联的产品信息，用于映射关联查询单个对象的信息，
+			property表示要将关联查询的用户信息映射到product中的哪个属性 -->
+			<association property="product" javaType="product">
+				<!-- id：关联查询用户的唯一表示
+                column:指定用于唯一表示产品信息的列
+                javaType:映射到Product的哪个属性 -->
+				<id column="product_id" property="id"/>
+				<result column="sku_id" property="skuId"/>
+				<result column="product_name" property="productName"/>
+				<result column="icon_url" property="iconUrl"/>
+				<result column="resource_ids" property="resourceIds"/>
+				<result column="productsPrice" property="price"/>
+				<result column="available" property="available"/>
+				<result column="productsDescription" property="description"/>
+				<result column="pageviews" property="pageviews"/>
+				<result column="evaluate" property="evaluate"/>
+			</association>
+			<association property="pricePackage" javaType="pricepackage">
+				<!-- id：关联查询价格套餐包的唯一表示
+                column:指定用于唯一表示价格套餐包信息的列
+                javaType:映射到PricePackage的哪个属性 -->
+				<id column="price_package_id" property="id"/>
+				<result column="product_id" property="productId"/>
+				<result column="type" property="type"/>
+				<result column="amount" property="amount"/>
+				<result column="amount_str" property="amountStr"/>
+				<result column="packagetype" property="packagetype"/>
+				<result column="pricePackagePrice" property="price"/>
+				<result column="discount" property="discount"/>
+				<result column="start_date" property="startDate"/>
+				<result column="end_date" property="endDate"/>
+				<result column="pricePackageDescription" property="description"/>
+			    <result column="total_price" property="totalPrice"/>
+				<result column="unit" property="unit"/>
+				<result column="counts" property="counts"/>
+				<result column="p_available" property="available"/>
+
+				<!-- <association property="accuracy" javaType="accuracy">
+					id：关联查询价格套餐包的唯一表示
+                    column:指定用于唯一表示价格套餐包信息的列
+                    javaType:映射到PricePackage的哪个属性
+					<id column="accuracy_id" property="id"/>
+					<result column="accuracys" property="accuracy"/>
+				</association> -->
+			</association>
+		</collection>
+	</resultMap>
+
+	<!-- 订单查询关联查询用户的购物项数量，即将整个查询的结果映射到cart中 -->
+	<resultMap type="cart" id="cartCounts">
+		<!-- 配置要映射的订单信息，如果有多个列组成唯一标识，那需要配置多个id，
+        property指定将唯一表示映射到pojo中的哪个属性上 -->
+		<id column="id" property="id"/>
+
+		<!-- 购物车明细信息，一个购物车查询出了多个订单明细，要是用collection进行映射
+        collection:对关联查询到多条记录映射到集合中
+        property:映射到cart类中的哪个属性
+        ofType:要映射到集合中pojo的属性 -->
+		<collection property="cartItems" ofType="CartItem">
+			<!-- id：订单明细的唯一标识,property:要将订单明细的唯一标识映射到Cartdetail的哪个属性 -->
+			<id column="cartItem_id" property="id"/>
+			<result column="carts_id" property="cartId"/>
+			<!-- 配置要映射关联的产品信息，用于映射关联查询单个对象的信息，
+			property表示要将关联查询的用户信息映射到product中的哪个属性 -->
+		</collection>
+	</resultMap>
+
+
+	<!-- 根据ID查询购物车 -->
+	<select id="getById" parameterType="Long" resultType="cart">
+		SELECT
+		id,
+		price,
+		user_id as userId,
+		status,
+		date_created as dateCreated,
+		date_updated as dateUpdated,
+		description
+		FROM
+		carts
+		WHERE
+		id = #{id}
+	</select>
+
+	<!-- 根据用户ID查询购物数量 -->
+	<select id="getCountByUserId" resultMap="cartsResultMap">
+		SELECT
+		<include refid="cart_column1"/>
+		FROM
+		carts
+		LEFT JOIN  cart_item ON cart_item.carts_id = carts.id
+		WHERE
+		carts.user_id = #{userId}
+	</select>
+
+	<!-- 根据用户ID查询购物车 -->
+	<select id="getAllByUserId" resultMap="cartsResultMap">
+		SELECT
+		<include refid="cart_column"/>
+		FROM
+		carts
+		LEFT JOIN  cart_item ON cart_item.carts_id = carts.id
+		LEFT JOIN  price_package ON cart_item.price_package_id = price_package.id
+		LEFT JOIN  products ON cart_item.product_id = products.id
+		
+		WHERE
+		carts.user_id = #{userId}
+	</select>
+<!-- LEFT JOIN  accuracy ON price_package.accuracy = accuracy.id -->
+	<!-- 查询所有购物车 -->
+	<select id="getAll" resultType="cart">
+		SELECT
+		id,
+		price,
+		user_id as userId,
+		status,
+		date_created as dateCreated,
+		date_updated as dateUpdated,
+		description
+		FROM
+		carts
+	</select>
+
+	<!-- 根据实体查询购物车 -->
+	<select id="getAllByCart" parameterType="cart" resultType="cart">
+		SELECT
+		id,
+		price,
+		user_id as userId,
+		status,
+		date_created as dateCreated,
+		date_updated as dateUpdated,
+		description
+		FROM
+		carts
+		<where>
+			<if test="id != null"> id = #{id} </if>
+			<if test="userId != null"> and user_id = #{userId} </if>
+			<if test="status != null"> and status = #{status} </if>
+			<if test="dateCreated != null"> and date_created = #{dateCreated} </if>
+			<if test="dateUpdated != null"> and date_updated = #{dateUpdated}</if>
+		</where>
+	</select>
+
+	<!-- 添加购物车 -->
+	<insert id="insert" parameterType="cart" useGeneratedKeys="true" keyProperty="id">
+		INSERT INTO carts (price, user_id, status, date_created, date_updated, description)
+		VALUES (#{price}, #{userId}, #{status}, #{dateCreated}, #{dateUpdated}, #{description})
+	</insert>
+	<!--
+        根据ID删除购物车
+        <delete id="delete" parameterType="Long">
+            DELETE FROM carts WHERE id = #{id}
+        </delete>
+
+        根据用户ID删除购物车
+        <delete id="deleteByUserid" parameterType="Long">
+            DELETE FROM carts WHERE user_id = #{userId}
+        </delete>
+         -->
+	<!-- 更新购物车 -->
+	<update id="update" parameterType="cart">
+		UPDATE carts
+		<set>
+			<if test="status != null"> status = #{status},</if>
+			<!--    <if test="dateUpdated != null">date_updated = #{dateUpdated},</if>  -->
+			<if test="price != null">price = #{price},</if>
+			<if test="description != null">description = #{description}</if>
+		</set>
+		WHERE
+		id = #{id}
+	</update>
+
+</mapper>

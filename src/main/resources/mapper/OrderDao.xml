@@ -1,0 +1,392 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ipplus360.dao.OrderDao">
+
+	<sql id="order_column">
+		orders.*,
+
+		order_item.id AS orderItem_id,
+		order_item.order_id,
+		order_item.item_num,
+		order_item.product_id,
+		order_item.price_package_id,
+		order_item.amount_str,
+		order_item.price AS orderItemPrice,
+		order_item.discount/10 AS orderItemDiscount,
+		order_item.original_price,
+		order_item.`item_type`,
+
+		products.sku_id,
+		products.product_name,
+		products.icon_url,
+		products.icon_large,
+		products.resource_ids,
+		products.price AS productPrice,
+		products.available,
+		products.description AS productsDescription,
+		products.pageviews,
+		products.evaluate,
+
+		price_package.product_id,
+		price_package.`type`,
+		price_package.amount,
+		price_package.amount_str AS
+		p_amount_str,
+		price_package.accuracy,
+		price_package.price AS
+		pricePackagePrice,
+		price_package.discount/10 AS discount,
+		price_package.start_date,
+		price_package.end_date,
+		price_package.description AS
+		pricePackageDescription,
+		price_package.unit,
+		price_package.counts,
+
+		accuracy.id AS accuracy_id,
+		accuracy.accuracy AS accuracys
+	</sql>
+
+	<sql id="order_column1">
+		orders.*,
+
+		order_item.id AS orderItem_id,
+		order_item.order_id,
+		order_item.item_num,
+		order_item.product_id,
+		order_item.price_package_id,
+		order_item.amount_str,
+		order_item.price AS orderItemPrice,
+		order_item.discount/10 AS orderItemDiscount,
+		order_item.original_price,
+		order_item.`item_type`,
+
+		products.sku_id,
+		products.product_name,
+		products.icon_url,
+		products.icon_large,
+		products.resource_ids,
+		products.price AS productPrice,
+		products.available,
+		products.description AS productsDescription,
+		products.pageviews,
+		products.evaluate
+
+	</sql>
+
+	<!-- 订单查询关联查询用户的resultMap，即将整个查询的结果映射到order中 -->
+	<resultMap type="order" id="ordersResultMap">
+		<!-- 配置要映射的订单信息，如果有多个列组成唯一标识，那需要配置多个id， property指定将唯一表示映射到pojo中的哪个属性上 -->
+		<id column="id" property="id" />
+		<result column="order_serial" property="orderSerial" />
+		<result column="price" property="price" />
+		<result column="user_id" property="userId" />
+		<result column="status" property="status" />
+		<result column="date_created" property="dateCreated" />
+		<result column="date_updated" property="dateUpdated" />
+		<result column="description" property="description" />
+
+		<result column="payment_method" property="paymentMethod" />
+		<!-- <result column="shipping_status" property="shippingStatus"/> -->
+
+		<result column="is_invoice" property="isInvoice" />
+
+		<!-- 订单明细信息，一个订单查询出了多个订单明细，要是用collection进行映射 collection:对关联查询到多条记录映射到集合中 
+			property:映射到order类中的哪个属性 ofType:要映射到集合中pojo的属性 -->
+		<collection property="orderItems" ofType="orderItem">
+			<!-- id：订单明细的唯一标识,property:要将订单明细的唯一标识映射到Orderdetail的哪个属性 -->
+			<id column="orderItem_id" property="id" />
+			<result column="order_id" property="orderId" />
+			<!-- <result column="product_id" property="productId"/> -->
+			<result column="item_num" property="itemNum" />
+			<result column="orderItemPrice" property="price" />
+			<result column="amount_str" property="amountStr" />
+			<result column="orderItemDiscount" property="discount" />
+			<result column="original_price" property="originalPrice" />
+			<result column="item_type" property="itemType" />
+			<!-- <result column="price_package_id" property="pricePackageId"/> -->
+			<!-- 配置要映射关联的产品信息，用于映射关联查询单个对象的信息， property表示要将关联查询的用户信息映射到product中的哪个属性 -->
+			<association property="product" javaType="product">
+				<!-- id：关联查询用户的唯一表示 column:指定用于唯一表示产品信息的列 javaType:映射到Product的哪个属性 -->
+				<id column="product_id" property="id" />
+				<result column="sku_id" property="skuId" />
+				<result column="product_name" property="productName" />
+				<result column="icon_url" property="iconUrl" />
+				<result column="icon_large" property="iconLarge" />
+				<result column="resource_ids" property="resourceIds" />
+				<result column="productPrice" property="price" />
+				<result column="available" property="available" />
+				<result column="productsDescription" property="description" />
+				<result column="pageviews" property="pageviews" />
+				<result column="evaluate" property="evaluate" />
+			</association>
+			<association property="pricePackage" javaType="pricepackage">
+				<!-- id：关联查询价格套餐包的唯一表示 column:指定用于唯一表示价格套餐包信息的列 javaType:映射到PricePackage的哪个属性 -->
+				<id column="price_package_id" property="id" />
+				<result column="product_id" property="productId" />
+				<result column="type" property="type" />
+				<result column="amount" property="amount" />
+				<result column="p_amount_str" property="amountStr" />
+				<result column="packagetype" property="packagetype" />
+				<result column="pricePackagePrice" property="price" />
+				<result column="discount" property="discount" />
+				<result column="start_date" property="startDate" />
+				<result column="end_date" property="endDate" />
+				<result column="pricePackageDescription" property="description" />
+				<result column="unit" property="unit" />
+				<result column="counts" property="counts" />
+
+				<association property="accuracy" javaType="accuracy">
+					<!-- id：关联查询定位精度的唯一表示 column:指定用于唯一表示价格套餐包信息的列 javaType:映射到PricePackage的哪个属性 -->
+					<id column="accuracy_id" property="id" />
+					<result column="accuracys" property="accuracy" />
+				</association>
+			</association>
+		</collection>
+	</resultMap>
+
+	<!-- 查询所有订单及详情 -->
+	<select id="getAll" resultMap="ordersResultMap">
+		SELECT
+		<include refid="order_column" />
+		FROM
+		orders,order_item,products,price_package,accuracy
+		WHERE
+		order_item.order_id = orders.id AND
+		order_item.product_id = products.id
+		AND
+		price_package.accuracy = accuracy.id AND
+		order_item.price_package_id = price_package.id
+	</select>
+
+	<!-- 查询所有订单及详情 -->
+	<select id="getAllOrdersByUserid" resultMap="ordersResultMap">
+		SELECT
+		<include refid="order_column1" />
+		FROM
+		orders,order_item,products
+		WHERE
+		order_item.order_id = orders.id AND
+		order_item.product_id = products.id
+		AND orders.user_id = #{userId}
+		ORDER BY date_created DESC
+		limit #{currPage}, #{pageSize}
+	</select>
+
+	<!-- 根据ID查询订单 -->
+	<select id="getById" resultMap="ordersResultMap">
+		SELECT
+		<include refid="order_column" />
+		FROM
+		orders,order_item,products,price_package,accuracy
+		WHERE
+		order_item.order_id = orders.id AND
+		order_item.product_id = products.id
+		AND
+		price_package.accuracy = accuracy.id AND
+		order_item.price_package_id = price_package.id AND
+		orders.id = #{id}
+	</select>
+
+	<!-- 根据ID查询订单 -->
+	<select id="getById1" resultMap="ordersResultMap">
+		SELECT
+		<include refid="order_column1" />
+		FROM
+		orders,order_item,products
+		WHERE
+		order_item.order_id = orders.id AND
+		order_item.product_id = products.id
+		AND
+		orders.id = #{id}
+	</select>
+
+	<!-- 根据用户ID查询订单 -->
+	<select id="getAllByUserId" resultMap="ordersResultMap">
+		SELECT
+		<include refid="order_column" />
+		FROM
+		orders,order_item,products,price_package,accuracy
+		WHERE
+		order_item.order_id = orders.id AND
+		order_item.product_id = products.id
+		AND
+		order_item.price_package_id = price_package.id AND
+		price_package.accuracy = accuracy.id AND
+		orders.user_id = #{userId}
+		ORDER BY date_created DESC
+		limit #{currPage},#{pageSize}
+	</select>
+
+	<!-- 根据用户ID和订单序列号查询订单	-->
+	<select id="getByUserIdAndOrderId" parameterType="Map"
+		resultMap="ordersResultMap">
+		<!-- SELECT <include refid="order_column"/> FROM orders,order_item,products,price_package,accuracy 
+			WHERE order_item.order_id = orders.id AND order_item.product_id = products.id 
+			AND order_item.price_package_id = price_package.id AND price_package.accuracy 
+			= accuracy.id AND orders.user_id = #{arg0} AND orders.order_serial = #{arg1} -->
+		SELECT
+		<include refid="order_column" />
+		FROM
+		orders,order_item,products,price_package,accuracy
+		WHERE
+		order_item.order_id = orders.id AND
+		order_item.product_id = products.id
+		AND
+		order_item.price_package_id = price_package.id AND
+		price_package.accuracy = accuracy.id AND
+		orders.user_id = #{arg0} AND
+		orders.order_serial = #{arg1}
+	</select>
+
+	<select id="getByUserAndOrder" parameterType="Map" resultMap="ordersResultMap">
+		SELECT
+		<include refid="order_column" />
+		FROM
+		orders,order_item,products,price_package,accuracy
+		WHERE
+		order_item.order_id = orders.id AND
+		order_item.product_id = products.id
+		AND
+		orders.user_id = #{arg0} AND
+		orders.order_serial = #{arg1}
+	</select>
+
+	<!-- 根据订单ID查询 -->
+	<select id="getByOrderSerial" parameterType="String" resultType="order">
+		SELECT
+		id,
+		order_serial AS orderSerial,
+		price,
+		user_id AS userId,
+		status,
+		date_created AS dateCreated,
+		date_updated AS dateUpdated,
+		description
+		FROM
+		orders
+		WHERE
+		order_serial = #{orderSerial}
+	</select>
+
+	<!-- 根据实体查询订单 -->
+	<select id="getAllByOrder" parameterType="order" resultType="order">
+		SELECT
+		id,
+		price,
+		order_serial AS orderSerial,
+		user_id AS userId,
+		status,
+		date_created AS dateCreated,
+		date_updated AS dateUpdated,
+		description
+		FROM
+		orders
+		<where>
+			<if test="id != null"> id = #{id} </if>
+			<if test="userId != null"> and user_id = #{userId} </if>
+			<if test="status != null"> and status = #{status} </if>
+			<if test="dateCreated != null"> and date_created = #{dateCreated} </if>
+			<if test="dateUpdated != null"> and date_updated = #{dateUpdated}</if>
+		</where>
+	</select>
+
+	<!-- 获取订单号 -->
+	<select id="getOrder" resultType="order">
+		SELECT
+		id,
+		order_serial AS
+		orderSerial,
+		price,
+		user_id AS userId,
+		`status`,
+		date_created AS
+		dateCreated,
+		date_updated AS dateUpdated,
+		description,
+		is_invoice AS
+		isInvoice
+		FROM orders WHERE user_id = #{arg0} AND order_serial =
+		#{arg1}
+	</select>
+
+	<select id="getAllCountByUserId" resultType="Integer">
+		SELECT count(*)
+		FROM
+		orders WHERE user_id = #{id}
+	</select>
+
+	<select id="getOrderByOrderSerial" resultType="order">
+		SELECT
+		id,
+		order_serial AS orderSerial,
+		price,
+		user_id AS userId,
+		`status`,
+		date_created AS dateCreated,
+		date_updated AS dateUpdated,
+		description,
+		is_invoice AS isInvoice
+		FROM orders WHERE order_serial = #{orderSerial}
+	</select>
+
+	<!-- 添加订单 -->
+	<insert id="insert" parameterType="order" useGeneratedKeys="true"
+		keyProperty="id">
+		INSERT INTO orders (order_serial, price, user_id, status,
+		date_created, date_updated,
+		description,is_invoice,shipping_status,payment_method)
+		VALUES
+		(#{orderSerial}, #{price}, #{userId}, #{status}, #{dateCreated},
+		#{dateUpdated},
+		#{description},#{isInvoice},#{shippingStatus},#{paymentMethod})
+	</insert>
+
+	<!-- 根据订单号删除订单 -->
+	<delete id="delete" parameterType="String">
+		DELETE FROM orders WHERE
+		order_serial = #{orderSerial}
+	</delete>
+
+	<!-- 根据用户ID删除订单 -->
+	<!-- <delete id="deleteByUserid" parameterType="Long"> DELETE FROM orders 
+		WHERE user_id = #{userId} </delete> -->
+
+	<!-- 更新订单 -->
+	<update id="update" parameterType="order">
+		UPDATE orders
+		<set>
+			<if test="status != null"> status = #{status},</if>
+			<!-- <if test="dateUpdated != null">date_updated = #{dateUpdated},</if> -->
+			<if test="price != null"> price = #{price},</if>
+			<if test="description != null"> description = #{description},</if>
+			<if test="isInvoice != null"> is_invoice = #{isInvoice},</if>
+			<if test="shippingStatus != null"> shipping_status = #{shippingStatus},</if>
+			<if test="paymentMethod != null"> payment_method = #{paymentMethod}</if>
+		</set>
+		WHERE
+		id = #{id}
+	</update>
+
+	<select id="orderStatisticsWeekly" parameterType="java.time.LocalDate"
+		resultType="java.util.Map">
+		SELECT COUNT(1) AS counts, SUM(price) AS totalPrice
+		FROM
+		orders
+		WHERE status IN (2, 4) AND WEEKOFYEAR(date_created) =
+		WEEKOFYEAR(#{orderDate})
+	</select>
+
+	<select id="orderStatisticsMonthly" parameterType="java.time.LocalDate"
+		resultType="java.util.Map">
+		SELECT COUNT(1) AS counts, SUM(price) AS totalPrice
+		FROM
+		orders
+		WHERE status IN (2, 4) AND MONTH(date_created) =
+		MONTH(#{orderDate})
+	</select>
+
+</mapper>

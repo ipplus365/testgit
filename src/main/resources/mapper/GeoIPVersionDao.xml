@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ipplus360.dao.GeoIPVersionDao">
+	<sql id="geoVersion_Column">
+	    id,
+	    private_version AS privateVersion,
+	    public_version AS publicVersion,
+	    db_name AS dbName,
+	    `table_name` AS tableName,
+	    start_time AS startTime,
+	    end_time AS endTime,
+	    `desc`,
+	    available
+
+	</sql>
+	<!-- 根据内部版本号查询 -->
+	<select id="getByAvailable" parameterType="boolean" resultType="geoIPVersion">
+		SELECT
+			<include refid="geoVersion_Column"/>
+		FROM ipplus360_mall.geoip_version
+		WHERE available = #{isAvailable}
+	</select>
+
+	<select id="getCurrentVersion" resultType="geoIPVersion">
+		SELECT public_version, start_time, available
+		FROM ipplus360_mall.geoip_version
+		WHERE available = 1
+	</select>
+</mapper>

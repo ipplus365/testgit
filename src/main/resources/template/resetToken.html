@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style type="text/css">
+			*{
+				padding: 0;
+				margin: 0;
+			}
+			html,body{
+				width: 100%;
+				height: 100%;
+			}
+			a{
+				color: #00abff;;
+				font-weight: normal;
+				
+			}
+			.wrap{
+				width: 800px;
+				padding: 50px 0 0px;
+				background: #fff;
+				margin: 0 auto;
+			}
+			.top{
+				border-bottom: 1px solid gray;
+				border-top: 1px solid gray;
+				padding: 0 30px 20px;
+			}
+			.top p{
+				color: gray;
+			}
+			.top p:nth-child(1){
+				font-size: 18px;
+				padding: 15px 0;
+				font-weight: 600;
+			}
+			.top p:nth-child(3){
+				font-size: 18px;
+				padding: 15px 0;
+				font-weight: 600;
+			}
+			.top p:nth-child(2){
+				font-size: 18px;
+				padding: 30px 0;
+				font-weight: 700;
+			}
+			
+			.light{
+				color: skyblue;
+				text-decoration: none;
+			}
+			.top p:nth-child(4){
+				font-size: 18px;
+				padding: 15px 0;
+				font-weight: 600;
+			}
+			.top p:nth-child(5){
+				font-size: 18px;
+				padding: 15px 0;
+				font-weight: 700;
+			}
+			.top p:nth-child(5) span{
+				color: #000000;
+			}
+			.top p:nth-child(6){
+				font-size: 18px;
+				padding: 5px 0;
+				font-weight: 700;
+			}
+			.top p:nth-child(7){
+				font-size: 18px;
+				padding: 5px 0;
+				font-weight: 700;
+			}
+			.bot{
+				padding: 20px 40px;
+			}
+			.bot p{
+				padding: 10px 0;
+			}
+			.bot a{
+				text-decoration: none;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="wrap">
+			<div class="top">
+				<p>您好&nbsp;&nbsp;<a class="light">${email}</a>&nbsp;!</p>
+				<p>感谢您使用埃文商城，您的Token已重置。</p>
+				<p><em><span>请注意：</span>如果不是您本人操作，请<a href="https://mall.ipplus360.com/info#[set]" target="_blank">前往个人中心</a>修改密码！</em></p>
+				<p>享受您的数据盛宴！</p>
+				<p>埃文科技</p>
+			</div>
+			<div class="bot">
+				<p>如您有任何疑问请访问 &nbsp;<a href="https://mall.ipplus360.com/" target="_blank">埃文商城</a>。</p>
+			</div>
+		</div>
+	</body>
+</html>

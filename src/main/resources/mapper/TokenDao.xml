@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ipplus360.dao.TokenDao">
+
+	<sql id="Token_Column">
+		id, token, user_id, created_date, update_date, effective_date,
+		expire_date, product_id,
+		available, counts, scene_counts, is_test, notified, test_count, description,
+		daily_limit
+	</sql>
+
+	<select id="getByToken" resultType="UserToken">
+		SELECT
+		<include refid="Token_Column" />
+		FROM tokens
+		WHERE token = #{token}
+	</select>
+
+	<select id="getById" resultType="UserToken">
+		SELECT
+		<include refid="Token_Column" />
+		FROM tokens
+		WHERE id = #{id}
+	</select>
+
+	<select id="getByUserIdAndToken" resultType="UserToken">
+		SELECT
+		<include refid="Token_Column" />
+		FROM tokens
+		WHERE user_id = #{arg0} AND token = #{arg1}
+	</select>
+	
+	<select id="getAllCountByUserId" resultType="Integer">
+		SELECT
+		count(*)
+		FROM tokens
+		WHERE user_id = #{id}
+	</select>
+
+	<select id="getByUserId" resultType="UserToken">
+		SELECT
+		<include refid="Token_Column" />
+		FROM tokens
+		WHERE user_id = #{userId}
+		ORDER BY effective_date ASC
+		<if test="currPage != null and  pageSize != null">
+			limit #{currPage},#{pageSize}
+		</if>
+
+	</select>
+
+	<select id="getNotifyTokens" resultType="UserToken">
+		SELECT
+		<include refid="Token_Column" />
+		FROM tokens
+		WHERE available = 1 AND notified = 0 AND is_test = 1 AND test_count &lt;
+		500
+		UNION ALL
+		SELECT
+		<include refid="Token_Column" />
+		FROM tokens
+		WHERE available = 1 AND notified = 0 AND is_test = 0 AND counts &lt; 100000
+	</select>
+
+	<insert id="add" parameterType="UserToken" useGeneratedKeys="true"
+		keyProperty="id">
+		INSERT INTO tokens(token, user_id, created_date, update_date,
+		effective_date, expire_date, product_Id,
+		available, is_test, notified, test_count, counts, scene_counts, description,
+		daily_limit)
+		VALUES (#{token}, #{userId}, #{createdDate},
+		#{updateDate}, #{effectiveDate}, #{expireDate},
+		#{productId}, #{available}, #{isTest}, #{notified},
+		#{testCount},#{counts}, #{sceneCounts}, #{description}, #{dailyLimit})
+	</insert>
+
+	<update id="update" parameterType="UserToken">
+		UPDATE tokens
+		<set>
+			<trim>
+				<if test="token != null and token != '' ">
+					token = #{token, jdbcType=VARCHAR},
+				</if>
+				<if test="userId != null ">
+					user_id = #{userId, jdbcType=BIGINT},
+				</if>
+				<if test="createdDate != null">
+					created_date = #{createdDate, jdbcType=TIMESTAMP},
+				</if>
+				<if test="updateDate != null">
+					update_date = #{updateDate, jdbcType=TIMESTAMP},
+				</if>
+				<if test="effectiveDate != null">
+					effective_date = #{effectiveDate, jdbcType=TIMESTAMP},
+				</if>
+				<if test="expireDate != null">
+					expire_date = #{expireDate, jdbcType=TIMESTAMP},
+				</if>
+				<if test="productId != null">
+					product_Id = #{productId, jdbcType=VARCHAR},
+				</if>
+				<if test="available != null">
+					available = #{available, jdbcType=BOOLEAN},
+				</if>
+				<if test="isTest != null">
+					is_test = #{isTest, jdbcType=BOOLEAN},
+				</if>
+				<if test="notified != null">
+					notified = #{notified, jdbcType=BOOLEAN},
+				</if>
+				<if test="testCount != null">
+					test_count = #{testCount, jdbcType=BIGINT},
+				</if>
+				<if test="dailyLimit != null">
+					daily_limit = #{dailyLimit, jdbcType=BIGINT},
+				</if>
+				<if test="counts != null">
+					counts = #{counts, jdbcType=BIGINT},
+				</if>
+				<if test="sceneCounts != null">
+					scene_counts = #{sceneCounts, jdbcType=BIGINT},
+				</if>
+				<if test="description != null">
+					description = #{description, jdbcType=VARCHAR}
+				</if>
+			</trim>
+		</set>
+		WHERE id = #{id}
+	</update>
+
+	<select id="getByUserAndProduct" resultType="UserToken">
+		SELECT
+		<include refid="Token_Column" />
+		FROM tokens
+		WHERE user_id = #{uid} AND product_id = #{pid}
+		ORDER BY effective_date ASC
+	</select>
+
+	<select id="getDistrictAPIByUser" resultType="UserToken">
+		SELECT
+		<include refid="Token_Column" />
+		FROM tokens
+		WHERE user_id = #{uid} AND product_id = #{pid} AND is_test IS TRUE
+	</select>
+
+</mapper>

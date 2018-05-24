@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+		PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ipplus360.dao.PricePackageDao">
+
+	<!-- 价格包关联查询的resultMap，即将整个查询的结果映射到pricePackage中 -->
+	<resultMap type="pricepackage" id="pricepackageResultMap">
+		<!-- 配置要映射价格包，如果有多个列组成唯一标识，那需要配置多个id，
+        property指定将唯一表示映射到pojo中的哪个属性上 -->
+		<id column="id" property="id"/>
+		<result column="product_id" property="productId"/>
+		<result column="type" property="type"/>
+		<result column="amount" property="amount"/>
+		<result column="amount_str" property="amountStr"/>
+		<result column="price" property="price"/>
+		<result column="discount" property="discount"/>
+		<result column="start_date" property="startDate"/>
+		<result column="end_date" property="endDate"/>
+		<result column="description" property="description"/>
+		<result column="unit" property="unit"/>
+		<result column="tips" property="tips"/>
+		<result column="available" property="available"/>
+		<result column="total_price" property="totalPrice"/>
+		<result column="counts" property="counts"/>
+		<association property="accuracy" javaType="accuracy">
+			<!-- id：关联查询价格套餐包的唯一表示
+            column:指定用于唯一表示价格套餐包信息的列
+            javaType:映射到PricePackage的哪个属性 -->
+			<id column="accuracy_id" property="id"/>
+			<result column="accuracys" property="accuracy"/>
+		</association>
+	</resultMap>
+
+	<sql id="PricePackage_column">
+		a.id,b.product_name,a.product_id,a.type,a.amount,a.amount_str,b.icon_url,a.price,a.discount,a.start_date,a.end_date,a.description
+	</sql>
+
+	<!-- 查询套餐 -->
+	<select id="getById" parameterType="Long" resultType="PricePackage" >
+		SELECT
+		<include refid="PricePackage_column"/>
+		FROM price_package a,products b
+		WHERE product_id=#{product_id} AND a.product_id=b.id AND a.available = TRUE ORDER BY a.amount ASC limit 1
+	</select>
+
+	<!-- 查询套餐数量 -->
+	<select id="getAmountById" parameterType="Map" resultType="PricePackage" >
+		SELECT
+		id,amount,amount_str
+		FROM price_package
+		WHERE product_id=#{id} and #{nowtime}>=start_date and end_date>=#{nowtime} and accuracy=1
+		order by amount asc;
+	</select>
+
+	<!-- <select id="getPackageTypeById" parameterType="Map" resultType="PricePackage" >
+        SELECT
+        packagetype
+        FROM price_package
+        WHERE product_id=#{id} and #{nowtime}>=start_date and end_date>=#{nowtime} and packagetype="街道级"
+    </select> -->
+
+	<!-- 查询套餐价格 -->
+	<select id="getProductPrice" parameterType="Map" resultType="PricePackage" >
+		SELECT
+		id,product_id,accuracy,price,unit,amount,tips
+		FROM price_package
+		WHERE product_id=#{id} and accuracy=#{accuracy} and amount_str=#{amount_str}
+	</select>
+
+	<!-- 根据id查询套餐 -->
+	<select id="getPricePackageById" parameterType="Long" resultMap="pricepackageResultMap">
+		SELECT
+		price_package.*,
+		products.sku_id,
+		products.product_name,
+		products.icon_url,
+		products.resource_ids,
+		products.price AS productsPrice,
+		products.available,
+		products.description AS productsDescription,
+		products.pageviews,
+		products.evaluate,
+		accuracy.id AS accuracy_id,
+		accuracy.accuracy AS accuracys
+		FROM price_package, products,accuracy
+		WHERE
+		price_package.product_id = products.id
+		AND price_package.accuracy = accuracy.id
+		AND price_package.id =#{id};
+	</select>
+
+	<!-- 根据产品查询套餐 -->
+	<select id="getByProductId" parameterType="Long" resultMap="pricepackageResultMap">
+		SELECT
+			price_package.*,
+			products.sku_id,
+			products.product_name,
+			products.icon_url,
+			products.resource_ids,
+			products.price AS productsPrice,
+			products.available,
+			products.description AS productsDescription,
+			products.pageviews,
+			products.evaluate,
+			accuracy.id AS accuracy_id,
+			accuracy.accuracy AS accuracys
+			FROM price_package, products,accuracy
+		WHERE
+			price_package.product_id = products.id
+		AND price_package.accuracy = accuracy.id
+		AND price_package.product_id =#{productId}
+		AND price_package.available = TRUE;
+
+	</select>
+
+	<!-- 根据产品查询套餐 -->
+	<select id="getByProductIdAndAccuracyId" parameterType="Map" resultMap="pricepackageResultMap">
+		SELECT
+			price_package.*,
+			products.sku_id,
+			products.product_name,
+			products.icon_url,
+			products.resource_ids,
+			products.price AS productsPrice,
+			products.available,
+			products.description AS productsDescription,
+			products.pageviews,
+			products.evaluate,
+			accuracy.id AS accuracy_id,
+			accuracy.accuracy AS accuracys
+		FROM price_package, products,accuracy
+		WHERE
+			price_package.product_id = products.id
+		AND price_package.accuracy = accuracy.id
+		AND price_package.product_id =#{productId}
+		AND accuracy.id = #{accuracyId}
+		AND price_package.available = TRUE;
+
+	</select>
+
+	<!-- 根据实体查询套餐 -->
+	<select id="getByPricePackage" parameterType="pricePackage" resultType="pricePackage">
+		SELECT
+		id,
+		product_id AS productId,
+		`type`,
+		amount,
+		amount_str AS amountStr,
+		accuracy AS "accuracy.id",
+		price,
+		total_price,
+		discount,
+		start_date AS startDate,
+		end_date AS endDate,
+		description,
+		counts
+		FROM price_package
+		<where>
+			<if test="id != null"> id = #{id} </if>
+			<if test="productId != null"> and product_id = #{productId} </if>
+			<if test="accuracy.id != null"> and accuracy = #{accuracy.id} </if>
+		</where>
+	</select>
+
+	<select id="getPackagesByProduct" resultType="PricePackage">
+      SELECT
+          id, type, amount, amount_str,price, total_price, unit, discount, available,tips
+      FROM price_package
+      WHERE (type =-1 or type = 1) AND product_id=#{productId} AND available=1
+    </select>
+
+	<select id="getByPriceId" resultType="PricePackage">
+		SELECT
+			id, type, amount, amount_str,price, total_price, unit, discount, available,tips,counts
+		FROM price_package
+		WHERE id = #{id}
+	</select>
+</mapper>

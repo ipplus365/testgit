@@ -1,0 +1,27 @@
+			.wrap{
+				width: 1205px;
+				margin: 0 auto;
+				color: #666;
+				font-family: "黑体";
+			}
+			h1{
+				text-align: center;
+				color: #666;
+				padding: 30px 0;
+			}
+			h2{
+				padding: 10px 0;
+			}
+			p{
+				padding: 5px 0;
+				font-size: 18px;
+			}
+			.images{
+				width: 100%;
+			}
+			.red{
+				color: red;
+			}
+			pre{
+				font-size: 18px;
+			}

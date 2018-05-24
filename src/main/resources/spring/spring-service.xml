@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+        http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd">
+
+    <context:component-scan base-package="com.ipplus360.service"/>
+
+    <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+
+    <bean id="freeMarker" class="org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer">
+        <property name="templateLoaderPath" value="classpath:template/" />
+        <property name="freemarkerSettings">
+            <props>
+                <prop key="template_update_delay">1800</prop>
+                <prop key="default_encoding">UTF-8</prop>
+                <prop key="locale">zh_CN</prop>
+            </props>
+        </property>
+    </bean>
+
+    <bean id="smtp" class="com.ipplus360.service.mail.SmtpAuthenticator">
+        <property name="username" value="noreply@ipplus360.com"/>
+        <property name="password" value="Aiwen456"/>
+    </bean>
+    <bean id="mailSession" class="javax.mail.Session" factory-method="getInstance">
+        <constructor-arg>
+            <props>
+                <prop key="mail.store.protocol">smtp</prop>
+                <prop key="mail.smtp.auth">true</prop>
+                <prop key="mail.smtp.host">smtp.ipplus360.com</prop>
+            </props>
+        </constructor-arg>
+        <constructor-arg ref="smtp"/>
+    </bean>
+    <bean id="mailService" class="com.ipplus360.service.mail.MailService">
+        <property name="fromEmail" value="noreply@ipplus360.com"/>
+        <property name="freeMarkerConfigurer" ref="freeMarker"/>
+    </bean>
+    <bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
+        <property name="session" ref="mailSession"/>
+        <property name="defaultEncoding" value="UTF-8"/>
+    </bean>
+
+    <!--采用注解的方式启用事务,在需要注解的方法上加@Transactional-->
+    <tx:annotation-driven transaction-manager="transactionManager"/>
+</beans>

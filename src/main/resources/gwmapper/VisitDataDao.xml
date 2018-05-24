@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ipplus360.guanwang.dao.VisitDataDao">
+    <sql id="visitData_column">
+        ip, user_agent, source, visit_time
+    </sql>
+
+    <select id="getIPCounts" parameterType="java.util.Date" resultType="java.lang.Long">
+        SELECT COUNT(DISTINCT(client_ip))
+        FROM operation_log
+        WHERE TO_DAYS(create_date) = TO_DAYS(#{visitTime})
+    </select>
+
+    <select id="getSources" parameterType="java.util.Date" resultType="java.util.Map">
+        SELECT COUNT(DISTINCT(client_ip)) AS counts, os_group AS os
+        FROM operation_log
+        WHERE TO_DAYS(create_date) = TO_DAYS(#{visitTime})
+        GROUP BY os_group ORDER BY counts DESC
+    </select>
+
+    <select id="getGwSourceUrls" parameterType="java.util.Date" resultType="java.util.Map">
+        SELECT origin_url, COUNT(DISTINCT(client_ip)) AS zzcounts
+        FROM operation_log
+        WHERE TO_DAYS(create_date) = TO_DAYS(#{visitTime})
+        AND origin_url NOT LIKE 'http://ipplus360.com%' AND origin_url NOT LIKE 'http://www.ipplus360.com%'
+        GROUP BY origin_url ORDER BY zzcounts DESC;
+    </select>
+
+</mapper>

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ipplus360.dao.ProductDescDao">
+    
+	<sql id="productDesc_column">
+		id,
+		product_id AS productId,
+		description,
+		coverage,
+		application_areas AS applicationAreas,
+		product_features AS productFeatures,
+		concurrency,
+		usage_rules AS usageRules,
+		attention,
+		discount_policies AS discountPolicies,
+		return_type AS returnType
+	</sql>
+	<select id="getByProductId" parameterType="Long" resultType="productdesc">
+	     SELECT
+        	<include refid="productDesc_column"/>
+		FROM
+			product_desc
+		WHERE
+			product_id = #{productId}
+	</select>
+    
+</mapper>

@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ipplus360.dao.DownloadOrderDao">
+    
+    <sql id="DownloadOrderDao_Column">
+    	id,user_id,product_id,email,ip,date_created
+    </sql>
+
+	<select id="getAll" resultType="DownloadOrder">
+        SELECT
+        <include refid="DownloadOrderDao_Column"/>
+        FROM download_order
+        WHERE product_id = #{productId}
+    </select>
+
+
+    <insert id="add" parameterType="DownloadOrder">
+	    INSERT INTO download_order(id,user_id,product_id,email,ip,date_created)
+	    VALUES (#{id},#{userId}, #{productId}, #{email}, #{ip}, #{dateCreated})
+    </insert>
+
+    <select id="getByDay" resultType="DownloadOrder">
+        SELECT
+        <include refid="DownloadOrderDao_Column"/>
+        FROM download_order
+        WHERE TO_DAYS(date_created) = TO_DAYS(#{day}) GROUP BY email ORDER BY date_created
+    </select>
+
+    <select id="getCountsByDay" resultType="java.lang.Integer">
+        SELECT
+        COUNT(DISTINCT(email))
+        FROM download_order
+        WHERE TO_DAYS(date_created) = TO_DAYS(#{day})
+    </select>
+
+    <select id="downloadStatisticsWeekly" parameterType="java.time.LocalDate" resultType="java.lang.Integer">
+        SELECT COUNT(1)
+        FROM download_order
+        WHERE WEEKOFYEAR(date_created) = WEEKOFYEAR(#{regDate})
+    </select>
+
+    <select id="downloadStatisticsMonthly" parameterType="java.time.LocalDate" resultType="java.lang.Integer">
+        SELECT COUNT(1)
+        FROM download_order
+        WHERE MONTH(date_created) = MONTH(#{regDate})
+    </select>
+</mapper>

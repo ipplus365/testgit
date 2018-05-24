@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ipplus360.dao.TestUserDao">
+    
+    <sql id="TestUser_column">
+        realname,email,mobile,org_name,description
+    </sql>
+    
+    <insert id="add" parameterType="TestUser">
+        insert into test_users(realname,email,mobile,org_name,description) values
+        (#{realname},#{email},#{mobile},#{orgName},#{description})
+    </insert>
+
+</mapper>

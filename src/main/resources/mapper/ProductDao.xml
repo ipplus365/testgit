@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ipplus360.dao.ProductDao">
+    
+     <sql id="products_column">
+			 
+        	products.*,
+        	price_package.id AS price_package_id,
+			price_package.product_id,
+			price_package.`type`,
+			price_package.amount,
+			price_package.amount_str,
+			price_package.accuracy,
+			price_package.price AS pricePackagePrice,
+			price_package.discount,
+			price_package.start_date,
+			price_package.end_date,
+			price_package.description AS  pricePackageDescription,
+			price_package.unit,
+			price_package.counts,
+			
+			accuracy.id AS accuracy_id,
+			accuracy.accuracy AS accuracys
+	</sql>
+    
+	<resultMap type="product" id="productResult">
+	    <id column="id" property="id"/>
+	    <result column="sku_id" property="skuId"/>
+	    <result column="product_name" property="productName"/>
+	    <result column="icon_url" property="iconUrl"/>
+	    <result column="icon_large" property="iconLarge"/>
+	    <result column="resource_ids" property="resourceIds"/>
+	    <result column="price" property="price"/>
+	    <result column="available" property="available"/>
+	    <result column="description" property="description"/>
+	    <result column="pageviews" property="pageviews"/>
+	    <result column="evaluate" property="evaluate"/>
+	    
+	    <collection property="pricePackage" ofType="pricepackage">
+	    	<id column="price_package_id" property="id"/>
+		    <result column="product_id" property="productId"/>
+		    <result column="type" property="type"/>
+		    <result column="amount" property="amount"/>
+		    <result column="amount_str" property="amountStr"/>
+		    <result column="packagetype" property="packagetype"/>
+		    <result column="pricePackagePrice" property="price"/>
+		    <result column="discount" property="discount"/>
+		    <result column="start_date" property="startDate"/>
+		    <result column="end_date" property="endDate"/>
+		    <result column="pricePackageDescription" property="description"/>
+		    <result column="unit" property="unit"/>
+		    <result column="counts" property="counts"/>
+		    
+		    <association property="accuracy" javaType="accuracy">
+		     	<!-- id：关联查询定位精度的唯一表示
+			    column:指定用于唯一表示价格套餐包信息的列
+			    javaType:映射到accuracy的哪个属性 -->
+			    <id column="accuracy_id" property="id"/>
+			    <result column="accuracys" property="accuracy"/>
+			</association>
+	    </collection>
+	</resultMap>
+    
+    <!-- 查询所有商品 -->
+    <sql id="Product_column">
+        id,sku_id,product_name,icon_url,icon_large,resource_ids,price,available,description, pageviews, evaluate
+    </sql>
+
+    <select id="listAll" resultType="Product">
+        SELECT
+        <include refid="Product_column"/>
+        FROM products WHERE available = TRUE
+    </select>
+
+    <select id="getByIds" resultType="Product">
+        SELECT
+        <include refid="Product_column"/>
+        FROM products WHERE id IN 
+        <foreach collection="list" item="id" open="(" close=")" separator=",">
+            #{id}
+        </foreach>
+    </select>
+
+	<select id="getOne" resultType="Product">
+		SELECT id, sku_id, product_name, icon_url, icon_large, price, available, description
+		FROM products
+		WHERE id=#{id}
+	</select>
+
+    <!-- 根据ID查询产品信息 -->
+    <select id="getById" parameterType="Long" resultType="product">
+       SELECT
+			id,
+			product_name AS productName,
+			icon_large AS iconLarge,
+			icon_url AS iconUrl,
+			description
+		FROM
+			products
+	   WHERE
+	      available = TRUE AND id = #{id}
+    </select>
+    
+    <!-- 根据ID查询产品信息 -->
+    <select id="getProductById" parameterType="Long" resultMap="productResult">
+        SELECT
+        	<include refid="products_column"/>
+		FROM
+			products,price_package,accuracy
+	   WHERE
+	   		price_package.product_id = products.id	AND
+	   		price_package.accuracy = accuracy.id	AND
+	        products.id = #{id}
+    </select>
+    
+    <!-- 增加浏览量 -->
+
+	<update id="updatePageviews" parameterType="Long">
+	
+		UPDATE products
+	
+		SET pageviews = pageviews+1
+	
+		WHERE id = #{id};
+	
+	</update>
+
+
+	<!-- 增加评论量 -->
+
+	<update id="updateEvaluate" parameterType="Long">
+	
+		UPDATE products
+	
+		SET evaluate = (SELECT COUNT(*) FROM `comment` WHERE `comment`.product_id = #{id} AND `comment`.status=1)
+	
+		WHERE id = #{id};
+	
+	</update>
+
+</mapper>

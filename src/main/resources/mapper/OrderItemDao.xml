@@ -1,0 +1,270 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+		PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ipplus360.dao.OrderItemDao">
+
+	<sql id="orderItem_column">
+		order_item.*,
+		products.sku_id,
+		products.product_name,
+		products.icon_url,
+		products.resource_ids,
+		products.price AS
+		productPrice,
+		products.available,
+		products.description AS
+		productsDescription,
+		products.pageviews,
+		products.evaluate,
+
+		price_package.product_id,
+		price_package.`type`,
+		price_package.amount AS
+		p_amount,
+		price_package.amount_str AS p_amount_str,
+		price_package.accuracy,
+		price_package.price AS pricePackagePrice,
+		price_package.discount,
+		price_package.start_date,
+		price_package.end_date,
+		price_package.description AS
+		pricePackageDescription,
+		price_package.unit,
+		price_package.counts,
+		price_package.available AS p_available,
+
+		accuracy.id AS accuracy_id,
+		accuracy.accuracy AS accuracys
+	</sql>
+
+
+	<resultMap type="orderItem" id="orderItemResult">
+		<id column="id" property="id" />
+		<result column="order_id" property="orderId" />
+		<result column="item_num" property="itemNum" />
+		<result column="amount_str" property="amountStr" />
+		<result column="amount" property="amount" />
+		<result column="price" property="price" />
+		<result column="discount" property="discount" />
+		<result column="original_price" property="originalPrice" />
+		<result column="item_type" property="itemType" jdbcType="VARCHAR" />
+		<result column="attrs" property="attrs" />
+		<result column="attr_ids" property="attrIds" />
+		<association property="product" javaType="product">
+			<!-- id：关联查询的唯一表示 column:指定用于唯一表示产品信息的列 javaType:映射到Product的哪个属性 -->
+			<id column="product_id" property="id" />
+			<result column="sku_id" property="skuId" />
+			<result column="product_name" property="productName" />
+			<result column="icon_url" property="iconUrl" />
+			<result column="resource_ids" property="resourceIds" />
+			<result column="productPrice" property="price" />
+			<result column="available" property="available" />
+			<result column="productsDescription" property="description" />
+			<result column="pageviews" property="pageviews" />
+			<result column="evaluate" property="evaluate" />
+		</association>
+		<association property="pricePackage" javaType="pricepackage">
+			<!-- id：关联查询价格套餐包的唯一表示 column:指定用于唯一表示价格套餐包信息的列 javaType:映射到PricePackage的哪个属性 -->
+			<id column="price_package_id" property="id" />
+			<result column="product_id" property="productId" />
+			<result column="type" property="type" />
+			<result column="p_amount" property="amount" />
+			<result column="p_amount_str" property="amountStr" />
+			<result column="packagetype" property="packagetype" />
+			<result column="pricePackagePrice" property="price" />
+			<result column="discount" property="discount" />
+			<result column="start_date" property="startDate" />
+			<result column="end_date" property="endDate" />
+			<result column="pricePackageDescription" property="description" />
+			<result column="unit" property="unit" />
+			<result column="counts" property="counts" />
+			<result column="p_available" property="available" />
+
+			<association property="accuracy" javaType="accuracy">
+				<!-- id：关联查询定位精度的唯一表示 column:指定用于唯一表示价格套餐包信息的列 javaType:映射到PricePackage的哪个属性 -->
+				<id column="accuracy_id" property="id" />
+				<result column="accuracys" property="accuracy" />
+			</association>
+		</association>
+	</resultMap>
+
+
+
+	<!-- 根据orederID查询订单项 -->
+	<select id="getOrderItemByOrderId" parameterType="Long"
+		resultType="OrderItem">
+		SELECT
+		order_id,item_type, attrs, attr_ids
+		FROM
+		order_item
+		WHERE
+		order_item.order_id = #{id}
+	</select>
+
+	<!-- 根据ID查询订单项 -->
+	<select id="getById" parameterType="Long" resultMap="orderItemResult">
+		SELECT
+		<include refid="orderItem_column" />
+		FROM order_item,products,price_package,accuracy
+		WHERE
+		order_item.product_id = products.id AND price_package.accuracy =
+		accuracy.id
+		AND order_item.price_package_id = price_package.id AND
+		order_item.id = #{id}
+	</select>
+
+	<!-- 根据订单ID查询订单项 -->
+	<select id="getByOrderId" parameterType="Long" resultMap="orderItemResult">
+		SELECT
+		<include refid="orderItem_column" />
+		FROM
+		order_item,products,price_package,accuracy
+		WHERE
+		order_item.product_id = products.id AND
+		price_package.accuracy =
+		accuracy.id AND
+		order_item.price_package_id = price_package.id AND
+		order_item.order_id = #{orderId}
+	</select>
+
+	<select id="getByOrderIdWithoutPricePackage" parameterType="Long" resultMap="orderItemResult">
+		SELECT
+		<include refid="orderItem_column" />
+		FROM
+		order_item,products,price_package,accuracy
+		WHERE
+		order_item.product_id = products.id AND order_item.order_id = #{orderId}
+	</select>
+
+	<!-- 查询所有订单项 -->
+	<select id="getAll" resultMap="orderItemResult">
+		SELECT
+		<include refid="orderItem_column" />
+		FROM
+		order_item,products,price_package,accuracy
+		WHERE
+		order_item.product_id = products.id AND
+		price_package.accuracy =
+		accuracy.id AND
+		order_item.price_package_id = price_package.id
+	</select>
+
+	<!-- 校验订单项 -->
+	<select id="checkOrderItem" resultMap="orderItemResult">
+		SELECT
+		<include refid="orderItem_column" />
+		FROM
+		order_item,products,price_package,accuracy
+		WHERE
+		order_item.order_id = #{orderId} AND
+		order_item.product_id = products.id AND
+		price_package.accuracy = accuracy.id AND
+		order_item.price_package_id = price_package.id AND
+		price_package.available = FALSE
+	</select>
+
+	<!-- 根据商品ID查询订单 -->
+	<select id="getAllByProductId" resultType="Map">
+		SELECT
+		users.email AS
+		"email",
+		users.id AS "user_id",
+		order_item.item_num AS "item_num",
+		orders.date_created AS "date_created",
+		concat(order_item.amount_str,"次") AS "amount"
+		FROM
+		orders,order_item,products,price_package,users
+		WHERE
+		order_item.order_id = orders.id AND
+		orders.user_id = users.id AND
+		order_item.product_id = products.id AND
+		order_item.price_package_id = price_package.id AND
+		order_item.product_id = #{productId} AND
+		orders.status IN(2,4)
+		UNION SELECT
+		download_order.email,
+		download_order.user_id,
+		1 AS "item_num",
+		download_order.date_created AS
+		"date_created",
+		"免费区县库" AS "amount"
+		FROM
+		download_order
+		WHERE
+		download_order.product_id = #{productId}
+		UNION ALL
+		SELECT
+		email,null,item_num,date_created,concat(amount,"次") AS "amount" FROM
+		fake_orders WHERE product_id =#{productId}
+		ORDER BY date_created DESC
+	</select>
+
+	<select id="getOrdersByDay" resultType="OrderUser">
+		SELECT
+		a.id, a.price,
+		a.user_id as userId, a.payment_method as paymentMethod, a.date_updated
+		as dateUpdated, b.email
+		FROM orders a LEFT JOIN users b ON b.id =
+		a.user_id WHERE
+		TO_DAYS(a.date_updated) = TO_DAYS(#{day}) AND a.status
+		IN(2,4)
+	</select>
+
+	<!-- 添加订单项 -->
+	<insert id="insert" parameterType="orderItem" useGeneratedKeys="true"
+		keyProperty="id">
+		INSERT INTO order_item (item_num, order_id, product_Id,
+		price_package_id,amount,amount_str,
+		price,discount,original_price,item_type,attrs, attr_ids)
+		VALUES (#{itemNum},
+		#{orderId}, #{product.id}, #{pricePackage.id},#{amount},#{amountStr},
+		#{price},#{discount},${originalPrice},#{itemType},#{attrs}, #{attrIds})
+	</insert>
+
+	<!-- 添加订单项 -->
+	<insert id="insertList" parameterType="java.util.List"
+		useGeneratedKeys="true" keyProperty="id">
+		INSERT INTO order_item (item_num, order_id, product_Id,
+		price_package_id, amount, amount_str, price, discount,
+		original_price,item_type,attrs, attr_ids)
+
+		VALUES
+		<foreach collection="list" item="item" index="index"
+			separator=",">
+			(#{item.itemNum}, #{item.orderId}, #{item.product.id},
+			#{item.pricePackage.id},#{item.amount}, #{item.amountStr},
+			#{item.price},#{item.discount},${item.originalPrice},#{item.itemType},#{item.attrs}, #{item.attrIds})
+		</foreach>
+	</insert>
+
+	<!-- 根据ID删除订单项 -->
+	<delete id="delete" parameterType="Long">
+		DELETE FROM order_item WHERE
+		id = #{id}
+	</delete>
+
+	<!-- 根据用户ID删除订单项(清空订单) -->
+	<delete id="deleteByOrderId" parameterType="Long">
+		DELETE FROM
+		order_item WHERE order_id = #{orderId}
+	</delete>
+
+	<!-- 更新订单 -->
+	<update id="update" parameterType="orderItem">
+		UPDATE order_item
+		<set>
+			<if test="itemNum != null"> item_num = #{itemNum},</if>
+			<if test="orderId != null"> order_id = #{orderId},</if>
+			<if test="product.id != null"> product_id = #{product.id},</if>
+			<if test="amount != null"> amount = #{amount},</if>
+			<if test="amountStr != null"> amount_str = #{amountStr},</if>
+			<if test="pricePackage.id != null"> price_package_id = #{pricePackage.id}, </if>
+			<if test="price !=null "> price = #{price}</if>
+		</set>
+		WHERE
+		id = #{id}
+	</update>
+
+</mapper>

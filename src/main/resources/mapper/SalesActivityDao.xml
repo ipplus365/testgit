@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ipplus360.dao.SalesActivityDao">
+
+	<sql id="activity_column">
+   		id, user_id AS userId, create_date AS createDate, `name`, ip, `status`
+	</sql>
+
+    <select id="getByStatus" resultType="SalesActivity">
+		SELECT
+			<include refid="activity_column"/>
+		FROM
+	   		ipplus360_mall.sales_activity
+		WHERE `status` = #{status}
+    </select>
+    
+    <select id="getById" resultType="SalesActivity">
+		SELECT
+			<include refid="activity_column"/>
+		FROM
+			ipplus360_mall.sales_activity
+	   WHERE
+	        id = #{id}
+    </select>
+    
+    <select id="getByUserId" resultType="SalesActivity">
+       SELECT
+			id, user_id userId, create_date createDate, `name`, ip, `status`
+	   FROM
+		   ipplus360_mall.sales_activity
+	   WHERE
+		   user_id = #{userId}
+    </select>
+
+    <insert id="add" parameterType="SalesActivity">
+		INSERT INTO ipplus360_mall.sales_activity
+		(user_id, create_date, `name`, ip)
+		VALUES (#{userId}, #{createDate}, #{name}, #{ip})
+	</insert>
+	
+    <delete id="delete" >
+        DELETE FROM ipplus360_mall.sales_activity
+		WHERE id = #{id}
+    </delete>
+    
+    <update id="update" parameterType="SalesActivity">
+        UPDATE ipplus360_mall.sales_activity
+        	<set>
+		        <if test="userId != null"> user_id = #{userId},</if>
+		        <if test="createDate != null"> create_date = #{createDate},</if>
+		        <if test="name != null"> `name` = #{name},</if>
+		        <if test="ip != null"> ip = #{ip},</if>
+        	</set>
+        WHERE 
+        	id = #{id}
+    </update>
+
+</mapper>

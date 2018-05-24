@@ -1,0 +1,84 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+    <meta http-equiv="content-type" content="text/html;charset=utf8">
+    <style type="text/css">
+        .order{ width:100%; border-left:#C8B9AE solid 1px;border-top:#C8B9AE solid 1px;border-collapse:collapse;}
+        .order td{width:25%;border-right:#C8B9AE solid 1px;border-bottom:#C8B9AE solid 1px;background-color: #D7D1CB;padding:10px 10px 6px;vertical-align: top;}
+    </style>
+</head>
+<body>
+<h3>${visitTime?date} 共有 ${gwCounts!} 个独立IP(已去重)访问官网首页(<font color="#5f9ea0">如显示不正常为官网统计异常，连接不上官网数据库导致</font>)</h3>
+
+    <table class="order">
+        <thead>
+        <tr>
+            <th>来源页面</th>
+            <th>次数统计(已去重)</th>
+        </tr>
+        </thead>
+        <tbody>
+        <#list gwSourceUrls! as gwSourceUrl>
+            <tr>
+                <#list gwSourceUrl?keys as itemkey>
+                    <#if itemkey="origin_url">
+                        <td>${gwSourceUrl[itemkey]!}</td>
+                    </#if>
+                    <#if itemkey="zzcounts">
+                        <td>${gwSourceUrl[itemkey]!}</td>
+                    </#if>
+                </#list>
+            </tr>
+        </#list>
+        </tbody>
+    </table>
+    <hr>
+    <table class="order">
+        <thead>
+            <tr>
+                <th>设备类型</th>
+                <th>次数统计(已去重，可能存在多台设备共用一个IP访问首页的情况)</th>
+            </tr>
+        </thead>
+        <tbody>
+        <#list gwSources! as gwSource>
+            <tr>
+                <#list gwSource?keys as itemkey>
+                <#if itemkey="counts">
+                    <td>${gwSource[itemkey]!}</td>
+                </#if>
+                <#if itemkey="os">
+                    <td>${gwSource[itemkey]!}</td>
+                </#if>
+                </#list>
+            </tr>
+        </#list>
+        </tbody>
+    </table>
+
+    <br><br><br><hr>
+    <h3>${visitTime?date} 共有 ${ipCounts!} 个独立IP(已去重)访问商城首页, 其中官网引流：${countsFromGw!}个</h3>
+    <table class="order">
+        <thead>
+            <tr>
+                <th>来源页面(null表示直接访问https://mall.ipplus360.com)</th>
+                <th>访问次数</th>
+            </tr>
+        </thead>
+        <tbody>
+        <#list sources as source>
+            <tr>
+                <#list source?keys as itemkey>
+                <#if itemkey="asource">
+                    <td>${source[itemkey]!}</td>
+                </#if>
+                <#if itemkey="sourceCounts">
+                    <td>${source[itemkey]!}</td>
+                </#if>
+                </#list>
+            </tr>
+        </#list>
+        </tbody>
+    </table>
+</body>
+</html>

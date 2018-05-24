@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ipplus360.dao.CommentDao">
+    
+    <!-- 价格包关联查询的resultMap，即将整个查询的结果映射到comment中 -->
+    <resultMap type="comment" id="commentResultMap">
+        <!-- 配置要映射价格包，如果有多个列组成唯一标识，那需要配置多个id，
+        property指定将唯一表示映射到pojo中的哪个属性上 -->
+        <id column="id" property="id"/>
+        <result column="product_id" property="productId"/>
+		<result column="user_id" property="userId"/>
+		<result column="status" property="status"/>
+		<result column="content" property="content"/>
+		<result column="comment_date" property="commentDate"/>
+		<association property="product" javaType="product">
+		    <!-- id：关联查询价格套餐包的唯一表示
+		    column:指定用于唯一表示价格套餐包信息的列
+		    javaType:映射到product的哪个属性 -->
+		    <id column="product_id" property="id"/>
+		    <result column="product_name" property="productName"/>
+		</association>
+    </resultMap>
+    
+    <sql id="comment">
+	   	`comment` .*, 
+	   	products.product_name
+    </sql>
+    
+    <sql id="Comment_column">
+        product_id,user_id,status,content
+    </sql>
+
+    <!-- 添加评论 -->
+    <insert id="add" parameterType="Map" >
+        insert into comment (<include refid="Comment_column"/>) values (#{productid},#{userid},#{status},#{comment})  
+    </insert>
+
+    <!-- 查询产品评论 -->
+    <select id="getCommentByProduct" parameterType="Map" resultType="Comment" >
+        SELECT
+        a.id,a.product_id,a.user_id,b.username,a.status,a.content,a.comment_date,IFNULL(a.email,b.email) AS email
+        FROM comment a LEFT JOIN users b ON a.user_id=b.id
+        WHERE product_id=#{productid} AND a.status=1
+        ORDER BY comment_date ASC
+    </select>
+
+    <!-- 查询用户评论 -->
+    <select id="getCommentByUser" resultType="Comment" parameterType="Map">
+        SELECT
+        product_id,user_id,status,content,comment_date
+        FROM comment
+        WHERE user_id=#{userid} 
+    </select>
+    
+    <!-- 查询用户评论 -->
+    <select id="getComment" resultType="Comment" parameterType="Map">
+        SELECT
+        product_id,user_id,status,content,comment_date
+        FROM comment
+        WHERE user_id=#{userid} AND product_id=#{productid}
+    </select>
+    
+    <!-- 根据用户ID查询用户评论 -->
+    <select id="getCommentByUserId" resultMap="commentResultMap" parameterType="Long">
+        SELECT
+       		<include refid="comment"/>
+        FROM 		`comment` 
+		LEFT JOIN 	 products 	ON 	`comment`.product_id = products.id
+        WHERE 
+        	`comment`.product_id = products.id
+		AND
+        	`comment`.user_id=#{userid} 
+    </select>
+    
+</mapper>

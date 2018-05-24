@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ipplus360.dao.AccuracyDao">
+   	
+    <!-- 查询定位精度 -->
+    <select id="getAccuracy" parameterType="Map" resultType="Accuracy" > 
+        SELECT
+        a.id,a.accuracy
+        FROM accuracy a,price_package b 
+        WHERE a.id=b.accuracy AND a.id=1 AND b.product_id=#{id} GROUP BY a.id
+    </select>
+    
+    <!-- 根据id查询定位精度 -->
+    <select id="getAccuracyById" resultType="Accuracy" > 
+        SELECT
+        id,accuracy
+        FROM accuracy WHERE id=#{id}
+    </select>
+    <!-- 查询可用精度 -->
+    <select id="getAccuracyByAvailable" resultType="Accuracy" >
+        SELECT
+        id,accuracy
+        FROM accuracy WHERE available=TRUE
+    </select>
+    
+</mapper>

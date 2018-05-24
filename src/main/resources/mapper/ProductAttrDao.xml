@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+		PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ipplus360.dao.ProductAttrDao">
+	<sql id="attr_column">
+		id, attr_key, attr_value, attr_type, attr, product_id, parent_id, start_time, price, `status`
+	</sql>
+
+	<select id="getTopAttrs" resultType="ProductAttr">
+		SELECT
+		<include refid="attr_column"/>
+		FROM product_attr
+		WHERE product_id = #{productId} AND parent_id IS NULL
+	</select>
+
+	<select id="getTopValidAttrs" resultType="ProductAttr">
+		SELECT
+		<include refid="attr_column"/>
+		FROM product_attr
+		WHERE product_id = #{productId} AND parent_id IS NULL AND `status` = 1
+	</select>
+
+	<select id="getAttrsByParent" resultType="ProductAttr">
+		SELECT
+		<include refid="attr_column"/>
+		FROM product_attr
+		WHERE parent_id = #{parentId} AND `status` = 1
+	</select>
+
+	<select id="getById" resultType="ProductAttr">
+		SELECT
+		<include refid="attr_column"/>
+		FROM product_attr
+		WHERE id = #{id}
+	</select>
+
+	<select id="getAttrsByIds" resultType="ProductAttr">
+		SELECT
+		<include refid="attr_column"/>
+		FROM product_attr
+		WHERE id IN
+		<foreach collection="array" item="id" index="index" open="(" separator="," close=")">
+			#{id}
+		</foreach>
+	</select>
+
+	<select id="getPreviousVersions" resultType="ProductAttr">
+		SELECT
+		id, attr_value, price
+		FROM product_attr
+		WHERE product_id = #{productId} AND parent_id = 4 AND `status` = 1
+	</select>
+
+</mapper>

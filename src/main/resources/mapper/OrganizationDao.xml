@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ipplus360.dao.OrganizationDao">
+	<sql id="organization_cloumn">
+		id,
+		org_name AS orgName,
+		user_id AS userId,
+		industry,
+		legal_person AS legalPerson,
+		legal_person_id AS legalPersonId,
+		budiness_contacts AS businessContacts,
+		mobile,
+		email,
+		license_number AS licenseNumber,
+		license_address AS licenseAddress,
+		license_start_date AS licenseStartDate,
+		license_end_date AS licenseEndDate,
+		license_dir AS licenseDir,
+		bank_account AS bankAccount,
+		bank_user_name AS bankUserName,
+		bank,
+		available,
+		token
+	</sql>
+	<select id="getById" parameterType="Long" resultType="organization" >
+        SELECT 
+        	<include refid="organization_cloumn"/> 
+       	FROM 
+       		organizations 
+   		WHERE id=#{id}
+    </select>
+
+	<select id="getByToken" parameterType="String" resultType="organization" >
+		SELECT
+		<include refid="organization_cloumn"/>
+		FROM
+		organizations
+		WHERE token=#{token}
+	</select>
+    
+	<select id="getByUserId" parameterType="Long" resultType="organization" >
+        SELECT 
+        	<include refid="organization_cloumn"/> 
+       	FROM 
+       		organizations 
+   		WHERE user_id=#{userId}
+    </select>
+
+	<select id="getOneByeUserId" parameterType="Long" resultType="organization" >
+        SELECT
+        	<include refid="organization_cloumn"/>
+       	FROM
+       		organizations
+   		WHERE user_id=#{userId}
+    </select>
+    
+	<select id="getByOrgName" parameterType="String" resultType="organization" >
+        SELECT 
+        	<include refid="organization_cloumn"/> 
+       	FROM 
+       		organizations 
+   		WHERE org_name=#{orgName}
+    </select>
+    
+	 <insert id="insert" parameterType="organization" useGeneratedKeys="true" keyProperty="id">
+		INSERT INTO organizations
+			(org_name, user_id, industry, legal_person, legal_person_id, budiness_contacts, mobile, email, license_number, license_address, license_start_date, license_end_date, license_dir, bank_account, bank_user_name, bank, available,token)
+		VALUES (#{orgName}, #{userId}, #{industry}, #{legalPerson}, #{legalPersonId}, #{businessContacts}, #{mobile}, #{email}, #{licenseNumber}, #{licenseAddress}, #{licenseStartDate}, #{licenseEndDate}, #{licenseDir}, #{bankAccount}, #{bankUserName}, #{bank}, #{available},#{token})
+	 </insert>
+	 
+	 <delete id="deleteOrgByUserId" parameterType="Long">
+	 	DELETE FROM organizations WHERE user_id = #{id}
+	 </delete>
+	 
+	
+</mapper>

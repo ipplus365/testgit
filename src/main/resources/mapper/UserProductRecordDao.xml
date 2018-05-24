@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ipplus360.dao.UserProductRecordDao">
+    <sql id="geoIP_column">
+        id, user_id, product_id, counts
+    </sql>
+
+    <select id="getByUserIdAndProductId" resultType="UserProductRecord">
+        SELECT
+        <include refid="geoIP_column"/>
+        FROM ipplus360_data.aiwen_geoip
+        WHERE id=#{id}
+    </select>
+
+    <select id="add" parameterType="UserProductRecord">
+        INSERT INTO user_product_record(user_id, product_id, counts) VALUES (#{userId}, #{productId}, #{counts})
+    </select>
+
+    <select id="update" resultType="GeoIP">
+        UPDATE user_product_record
+        <set>
+            <trim>
+                <if test="counts != null">
+                    counts = #{counts, jdbcType=BIGINT},
+                </if>
+            </trim>
+        </set>
+        WHERE user_id = #{userId} and product_id = #{productId}
+    </select>
+</mapper>

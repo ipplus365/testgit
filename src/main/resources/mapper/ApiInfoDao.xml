@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ipplus360.dao.ApiInfoDao">
+    
+	<sql id="apiInfo_column">
+		id,
+		product_id AS productId,
+		return_type AS returnType
+	</sql>
+	
+	<select id="getApiInfo" parameterType="Long" resultType="ApiInfo">
+	     SELECT
+        	<include refid="apiInfo_column"/>
+		FROM
+			api_info
+		WHERE
+			product_id = #{productId}
+	</select>
+    
+</mapper>

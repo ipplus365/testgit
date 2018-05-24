@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ipplus360.dao.UserDao">
+    <sql id="UserSignIn_column">
+        username,realname,email,mobile,password,password_salt,organization_id,date_created,reg_from,
+        token,token_exptime,token_status, is_org
+    </sql>
+
+    <sql id="User_Column">
+        id, username, realname, email, mobile, password, password_salt,check_code,check_status,check_code_updated, organization_id, date_created,
+        date_updated, last_login, reg_from, last_login_from, loginCount, source, productIds, test_count, test_date_started,
+        status, description, token, token_exptime, token_status, has_free_district_api, is_org
+    </sql>
+
+    <insert id="add" parameterType="User">
+        insert into users (<include refid="UserSignIn_column"/>) values
+        (#{username},#{realname},#{email},#{mobile},#{password},#{passwordSalt},#{organizationId},#{dateCreated},#{regFrom},#{token},#{tokenExptime},#{tokenStatus},#{isOrg})
+    </insert>
+
+    <select id="userSignIn" parameterType="User" resultType="User">
+        SELECT
+        email,password,token_status
+        FROM users
+        WHERE email=#{email} and password=#{password}
+    </select>
+
+    <select id="getByEmail" resultType="User">
+        SELECT
+        <include refid="User_Column"/>
+        FROM users
+        WHERE email=#{email}
+    </select>
+    
+    
+    <select id="getByMobile" resultType="User">
+        SELECT
+        <include refid="User_Column"/>
+        FROM users
+        WHERE mobile=#{mobile} and status = 1
+    </select>
+    
+    <select id="getById" resultType="User">
+        SELECT
+        <include refid="User_Column"/>
+        FROM users
+        WHERE id=#{id}
+    </select>
+
+    <select id="getByToken" resultType="User">
+        SELECT
+        <include refid="User_Column"/>
+        FROM users
+        where token = #{activeToken} and status = 0
+    </select>
+
+    <update id="active">
+        UPDATE users
+        SET status = 1
+        WHERE token = #{token};
+    </update>
+    
+    <update id="changepwd" parameterType="User">
+        UPDATE users
+        SET password = #{password}
+        WHERE email = #{email};
+    </update>
+    
+    <update id="updateTestCount" parameterType="User">
+        UPDATE users
+        SET test_count = #{testCount}
+        WHERE email = #{email};
+    </update>
+
+    <update id="updateToken" parameterType="User">
+        UPDATE users
+        SET token = #{token},
+            token_exptime=#{tokenExptime},
+            token_status=0
+        WHERE email = #{email};
+    </update>
+        
+    <update id="resetPwd" parameterType="User">
+        UPDATE users
+        SET password = #{password},
+        	password_salt = #{passwordSalt},
+        	check_status = 0,
+        	token_status = 1
+        WHERE email = #{email};
+    </update>
+    
+    
+     <update id="resetPwdforMobile" parameterType="User">
+        UPDATE users
+        SET password = #{password},
+        	password_salt = #{passwordSalt},
+        	check_status = 0,
+        	token_status = 1
+        WHERE mobile = #{mobile};
+    </update>
+    
+    <update id="addCheckCode" parameterType="User">
+        UPDATE users
+        SET check_code = #{checkCode},
+        	check_code_updated = #{checkCodeUpdated},
+        	check_status = 1
+        WHERE email = #{email};
+    </update>
+
+    <update id="update" parameterType="User">
+        UPDATE users
+        SET last_login = #{lastLogin},
+        last_login_from = #{lastLoginFrom},
+        loginCount =  #{loginCount}
+        WHERE email = #{email};
+    </update>
+
+    <select id="getNewUsers" resultType="User" parameterType="java.util.Date">
+        SELECT id, username, email, date_created, status
+        FROM users
+        WHERE status = 1 AND TO_DAYS(date_created) = TO_DAYS(#{date_created})
+    </select>
+    
+    <select id="userStatisticsWeekly" parameterType="java.time.LocalDate" resultType="java.lang.Integer">
+        SELECT COUNT(1)
+        FROM users
+        WHERE status = 1 AND WEEKOFYEAR(date_created) = WEEKOFYEAR(#{date})
+    </select>
+
+    <select id="userStatisticsMonthly" parameterType="java.time.LocalDate" resultType="java.lang.Integer">
+        SELECT COUNT(1)
+        FROM users
+        WHERE status = 1 AND MONTH(date_created) = MONTH(#{date})
+    </select>
+    
+    <update id="updateMobile" parameterType="User">
+        UPDATE users
+        SET mobile = #{mobile}
+        WHERE email = #{email};
+    </update>
+
+    <update id="updateFreeDistrictApi" >
+        UPDATE users
+        SET has_free_district_api = true
+        WHERE id = #{userId};
+    </update>
+    
+</mapper>

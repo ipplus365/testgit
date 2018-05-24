@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ipplus360.dao.LogFileDao">
+    <sql id="logFile_column">
+        id, file, success, attempt_times, attempt_time
+    </sql>
+
+    <insert id="add" parameterType="LogFile">
+        INSERT INTO ipplus360_log.log_file(<include refid="logFile_column"/>)
+        VALUES
+        (#{id}, #{file}, #{success}, #{attemptTimes}, #{attemptTime})
+    </insert>
+
+    <update id="update" parameterType="LogFile">
+        UPDATE ipplus360_log.log_file
+        SET success = 1
+        WHERE attempt_time &lt;= #{attemptTime}
+    </update>
+
+    <select id="getByDesc" resultType="LogFile">
+        SELECT
+        <include refid="logFile_column"/>
+        FROM ipplus360_log.log_file
+        WHERE success=0 ORDER BY id DESC limit 1;
+    </select>
+
+    <select id="getUnRecord" resultType="LogFile">
+        SELECT
+        <include refid="logFile_column"/>
+        FROM ipplus360_log.log_file
+        WHERE success=0 ORDER BY id DESC;
+    </select>
+
+</mapper>

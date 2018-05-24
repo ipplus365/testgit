@@ -1,0 +1,50 @@
+/*认证为企业用户*/
+.mt47{margin-top:47px;}
+.step-img,.suc,.fail i{display:inline-block;*display:inline;*zoom:1;vertical-align:middle;background:url(../images/certification.png) no-repeat;}
+.certification{padding:0 70px;width: 900px;margin: auto}
+.title-v1{color: #363636;text-align: left;font-weight: bold;padding-bottom: 15px;border-bottom: 1px solid gainsboro;}
+.certification-item{border-bottom:1px solid #ddd;padding-bottom:47px;}
+.certification-spe{display:none;}
+.certification-item h4{padding-top:15px;padding-bottom:30px;font-size:16px;color:#333;}
+.certification-item .step{margin-top:30px;padding-top:48px;height:102px;background-color:#00b1ff;}
+.certification-item .step .step-img{display:block;margin:0 auto;width:674px;height:57px;background-position:0 0;}
+.certification dl{zoom:1;padding:8px 0;font-size:14px;color:#666;}
+.certification dl:after{display:block;visibility:hidden;clear:both;height:0;content:'.'}
+.certification dt{float:left;width:213px;text-align:right;line-height:32px;color: #363636;}
+.certification dd{float:left;margin-left:10px;min-height:32px;line-height:32px;text-align:left;color: #363636;}
+.certification dd>a{color: #00A0E9;}
+.certification .normal-input,.certification select{padding-left:5px;height:30px;line-height:30px;border:1px solid #ddd;color:#a9a9a9;}
+.certification .normal-input{width:441px;}
+.certification .normal-input.w241{margin-right:10px;width:241px;}
+.certification .normal-input.w153{width:153px;}
+.certification select{margin-right:10px;width:140px;*margin-top:8px;*margin-left:8px;}
+.certification .required{display:inline-block;*display:inline;*zoom:1;margin-right:5px;vertical-align:middle;color:#ff8000;font-style:normal;}
+.certification .update-img{position:relative;margin-left:10px;width:160px;height:120px;cursor:pointer;}
+.certification .update-img input{position:absolute;top:0;left:0;padding-left:0;margin-left:0;width:160px;height:120px;opacity:0;filter:alpha(opacity=0);}
+.certification .getNum,.certification .getNumAgain{display:block;width:190px;height:32px;vertical-align:top;border-radius:5px;text-align:center;}
+.certification .getNum{display:inline-block;*display:inline;*zoom:1;color:#fff;background-color:#00b1ff;}
+.certification .getNumAgain{display:none;color:#999;background-color:#e9eef1;}
+.certification .suc{width:14px;height:14px;background-position:-170px -60px;}
+.certification .fail i{margin-right:5px;width:14px;height:14px;background-position:-190px -60px;}
+.certification .btnDiv{border-top:0 none;padding-top:20px;padding-bottom:118px;margin-top:0;text-align: center;}
+.certification .btnDiv dl{padding-bottom:50px;padding-left:213px;}
+.certification .btnDiv .grayBtn{background-color:#eee;color:#999;}
+/* buttons */
+.blueBtn,.grayBtn,.newBtn,.addBtn{display:inline-block;font-size:16px;text-align:center;border-radius:5px;}
+.blueBtn{width:130px;height:40px;line-height:40px;background:#00afff;color:#fff;border:none;cursor: pointer;}
+.blueBtn.settle{width:120px;margin-left:30px;}
+.grayBtn{width:130px;height:40px;line-height:40px;background:#f6f6f6;border:1px solid #ddd;border: none;cursor: not-allowed;}
+.blueBtn2,.grayBtn2{display: inline-block;width: 130px;height: 40px;background: #ccc;line-height: 40px;text-align: center;color: #fff;font-size: 16px;border-radius: 5px}
+.blueBtn2{background: #00b1ff;outline: none;border: none;}
+.newBtn{width:120px;height:40px;line-height:40px;background:#00afff;color:#fff;}
+.addBtn{width:112px;height:36px;line-height:36px;background:#00afff;color:#fff;font-size:14px;}
+.blueBtn:hover,.newBtn:hover,.addBtn:hover{color:#fff;}
+.cross{font-size:30px;font-style:normal;vertical-align:-4px;}
+.addBtn .cross{font-size:24px;vertical-align:-2px;}
+.copyBtn{width:96px;height:40px;display:inline-block;background-position:0 -150px;}
+.get{width:96px;border-radius:0;position:relative;float:left;}
+.get .i31{position:absolute;right:-23px;top:14px;}
+.opeBtn{display:inline-block;width:78px;height:34px;border:1px solid #ccc;border-radius:5px;background:#fafafa;line-height:34px;text-align:center;margin-right:16px;font-size:14px;color:#666;}
+.editIcon,.delIcon{display:inline-block;width:16px;height:16px;vertical-align:middle;margin-right:5px;}
+.editIcon{background-position:-175px -275px;}
+.delIcon{background-position:-31px -200px;}

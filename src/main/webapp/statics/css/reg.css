@@ -1,0 +1,327 @@
+.head{
+	padding: 20px 0;
+    width: 1200px;
+    margin: auto;
+}
+#reg{
+	padding: 30px 65px 20px 65px;
+	margin:auto;
+	width: 534px;
+}
+#reg>h2>span{
+	display: inline-block;
+	width: 50%;
+	color: #3fa9f5;
+	text-align: center;
+	line-height: 65px;
+	font-size: 16px;
+	border-bottom: 2px solid #dfe2e2;
+	position: relative;
+	cursor: pointer;
+}
+#reg>h2>span>i{
+	position: absolute;
+	border: 9px solid #3fa9f5;
+	border-top-color: transparent;
+	border-left-color: transparent;
+	border-right-color: transparent;
+	bottom: 0;
+	left: 50%;
+	margin-left: -5px;
+	display: none;
+}
+#reg>h2>span.active>i{
+	display: block;
+}
+#reg>h2>span.active{
+	border-bottom: 2px solid #3fa9f5;
+}
+#reg .box{
+	width: 100%;
+	/*position: relative;*/
+	margin-top: 13px;
+	/*overflow: hidden;*/
+}
+#reg .box .person{
+	position: relative;
+	width: 100%;
+	/*display: none;*/
+}
+#reg .box .person>p{
+	background: #e2f2fe;
+	color: #3fa9f5;
+	text-align: center;
+	font-size: 14px;
+	padding: 8px 0;
+	border-radius: 5px;
+}
+#reg .box .person>p.regError{
+	color: #e22;
+	text-align: left;
+	background: #fff;
+	height: 32px;
+}
+#reg .box .person>p.successCode{
+	color: rgb(122,189,24);
+	text-align: left;
+	background: #fff;
+	height: 32px;
+}
+.i-error{
+	display: inline-block;
+    width: 16px;
+    height: 16px;
+    vertical-align: middle;
+    margin-bottom: 3px;
+    margin-right: 5px;
+	background:url(../../statics/images/icon.png) no-repeat;
+	background-position: -17px -100px;
+}
+.success{
+	display: inline-block;
+    width: 16px;
+    height: 16px;
+    vertical-align: middle;
+    margin-bottom: 3px;
+    margin-right: 5px;
+    background:url(../../statics/images/icon.png) no-repeat;
+	background-position: 0 -117px;
+}
+.form_success .i-success{
+	display: inline-block;
+    width: 16px;
+    height: 16px;
+    vertical-align: middle;
+    margin-bottom: 3px;
+    background:url(../../statics/images/icon.png) no-repeat;
+	background-position: 0 -117px;
+}
+#reg .box .person>li.mt32{
+	margin-top: 32px;
+}
+#reg .box .person>li{
+	/*margin-top: 32px;*/
+	border-radius: 5px;
+	border: 1px solid #d7d4d4;
+	list-style: none;
+}
+#reg .box .person>li.regError{
+	border: 1px solid #e22;
+}
+#reg .box .person>li>span{
+	font-size: 14px;
+	color: #333333;
+	line-height: 35px;
+	display: inline-block;
+	padding: 0 10px;
+}
+#reg .box .person>li>input{
+	border: none;
+	outline: none;
+	padding: 8px 0;
+	width: 300px;
+	color: #757575;
+}
+#reg .box .person>li.spec{
+	border: none;
+	margin-top: 5px;
+}
+#reg .box .person>li.spec>button{
+	border: none;
+	outline: none;
+	background: #3fa9f5;
+	color: #fff;
+	width: 128px;
+	text-align: center;
+	border-radius: 5px;
+	font-size: 14px;
+	height: 39px;
+	behavior: url(../../../css/PIE.htc);
+	cursor: pointer;
+}
+#reg .box .person>li.spec>input{
+	outline: none;
+	padding: 8px 0;
+	width: 270px;
+	border: 1px solid #d7d4d4;
+	border-radius: 5px;
+	float: right;
+	color: #757575;
+	height: 39px;
+}
+#reg .box .person>li.mobileyzm{
+	border: none;
+}
+#reg .box .person>li.mobileyzm>span{
+	width: 128px;
+	display: inline-block;
+	height: 39px;
+	border: 1px solid #d7d4d4;
+	border-radius: 5px;
+	padding: 0;
+}
+#reg .box .person>li.mobileyzm>input{
+	outline: none;
+	padding: 10px 0;
+	width: 270px;
+	border: 1px solid #d7d4d4;
+	border-radius: 5px;
+	float: right;
+	height: 39px;
+}
+#reg .box .person>button{
+	display: block;
+	/*margin-top: 30px;*/
+	background: #3fa9f5;
+	width: 100%;
+	font-size: 20px;
+	border:none;
+	outline: none;
+	color: #fff;
+	padding: 9px 0;
+	border-radius: 5px;
+	cursor: pointer;
+}
+#reg>h3,#reg>h4{
+	text-align: center;
+	font-size: 12px;
+	color: #333;
+}
+#reg>h3>a,#reg>h4>a{
+	color: #3fa9f5;
+}
+#reg>h3{
+	padding-top: 20px;
+}
+#reg>h4{
+	padding: 7px 0;
+}
+#reg .box .company{
+	position: relative;
+	width: 100%;
+	display: none;
+}
+#reg .box .company>p{
+	background: #e2f2fe;
+	color: #3fa9f5;
+	text-align: center;
+	font-size: 14px;
+	padding: 8px 0;
+	border-radius: 5px;
+}
+#reg .box .company>p.regError{
+	color: #e22;
+	text-align: left;
+	background: #fff;
+	height: 32px;
+}
+#reg .box .company>p.successCode{
+	color: rgb(122,189,24);
+	text-align: left;
+	background: #fff;
+	height: 32px;
+}
+#reg .box .company>li.mt32{
+	margin-top: 32px;
+}
+#reg .box .company>li.regError{
+	border: 1px solid #e22;
+}
+#reg .box .company>li{
+	/*margin-top: 30px;*/
+	border-radius: 5px;
+	border: 1px solid #d7d4d4;
+	list-style: none;
+}
+#reg .box .company>li>span{
+	font-size: 14px;
+	color: #333333;
+	line-height: 35px;
+	display: inline-block;
+	padding: 0 10px;
+	width: 76px;
+}
+#reg .box .company>li>input{
+	border: none;
+	outline: none;
+	padding: 8px 0;
+	width: 300px;
+	color: #757575;
+}
+#reg .box .company>li.spec{
+	border: none;
+	margin-top: 5px;
+}
+#reg .box .company>li.spec>button{
+	border: none;
+	outline: none;
+	background: #3fa9f5;
+	color: #fff;
+	padding: 11px 0;
+	width: 128px;
+	text-align: center;
+	border-radius: 5px;
+	height: 39px;
+}
+#reg .box .company>li.spec>input{
+	outline: none;
+	padding: 10px 0;
+	width: 270px;
+	border: 1px solid #d7d4d4;
+	border-radius: 5px;
+	float: right;
+	height: 39px;
+}
+#reg .box .company>li.shoujiyzm{
+	border: none;
+}
+#reg .box .company>li.shoujiyzm>span{
+	width: 128px;
+	display: inline-block;
+	height: 39px;
+	border: 1px solid #d7d4d4;
+	border-radius: 5px;
+	padding: 0;
+}
+#reg .box .company>li.shoujiyzm>input{
+	outline: none;
+	padding: 10px 0;
+	width: 270px;
+	border: 1px solid #d7d4d4;
+	border-radius: 5px;
+	float: right;
+	height: 39px;
+}
+#reg .box .company>button{
+	display: block;
+	/*margin-top: 30px;*/
+	background: #3fa9f5;
+	width: 100%;
+	font-size: 20px;
+	border:none;
+	outline: none;
+	color: #fff;
+	padding: 9px 0;
+	border-radius: 5px;
+}
+
+#regPwd,#repeatPwd{
+	border: none;
+	outline: none;
+	padding: 8px 0;
+	width: 300px;
+}
+#regPwdCom,#repeatPwdCom{
+	border: none;
+	outline: none;
+	padding: 8px 0;
+	width: 300px;
+}
+#reg .box .person>li.spec>button.disabled{
+	background:#909090;
+	cursor:not-allowed;
+}
+#reg .box .company>li.spec>button.disabled{
+	background:#909090;
+	cursor:not-allowed;
+}

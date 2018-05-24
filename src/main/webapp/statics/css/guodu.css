@@ -1,0 +1,255 @@
+div,span{
+				color: #000;
+			}
+			.banner.course{
+				width: 100%;
+				background: url(images/course_banner.png) no-repeat;
+				height: 344px;
+			}
+			.banner.course .banner_inner{
+				width: 1000px;
+				margin: 0 auto;
+				padding: 120px 0;
+			}
+			.banner.course .banner_inner>h2{
+				padding: 20px 0;
+				font-size: 40px;
+				font-weight: bolder;
+				letter-spacing: 4px;
+			}
+			.banner.course .banner_inner>h2>span{
+				font-weight: normal;
+				font-size: 24px;
+				letter-spacing: 1px;
+				color: #fff;
+			}
+			.banner.course .banner_inner>p{
+				font-size: 30px;
+				letter-spacing: 4px;
+			}
+			#introduction{
+				width: 100%;
+				height: 620px;
+				background: #faf9f9;
+				margin-top: 20px;
+			}
+			#introduction .inner{
+				background: url(images/jieshao_bg.png) no-repeat;
+				width: 1400px;
+				margin: 0 auto;
+				height: 100%;
+				background-position: 150px 150px;
+				position: relative;
+			}
+			#introduction .inner .right{
+				padding: 40px 0;
+				position: absolute;
+				right: 0;
+			}
+			#introduction .inner .right>h2{
+				color: #747474;
+				font-size: 20px;
+				padding: 10px 0;
+			}
+			#introduction .inner .right>h3{
+				color: #bab9b9;
+				font-size: 14px;
+			}
+			#introduction .inner .right>p{
+				color: #747474;
+				width: 740px;
+				font-size: 15px;
+				position: relative;
+				line-height: 20px;
+			}
+			#introduction .inner .right>p.first:before{
+				content: "\02022";
+			    color: #b9b8b8;
+			    margin-right: 12px;
+			    position: absolute;
+			    left: -16px;
+			    font-size: 25px;
+			}
+			#course{
+				width: 100%;
+			}
+			#course .inner{
+				width: 1366px;
+				margin: auto;
+				padding: 30px;
+			}
+			#course .inner>h2{
+				color: #747474;
+				font-size: 20px;
+				padding: 10px 0;
+				padding-left: 610px;
+			}
+			#course .inner>p{
+				color: #bab9b9;
+				font-size: 14px;
+				padding-left: 610px;
+			}
+			#course .inner .main{
+				width: 100%;
+				/*height: 500px;*/
+				position: relative;
+				overflow: hidden;
+				padding: 30px 0;
+				margin-top: 30px;
+			}
+			#course .inner .main:after{
+				background: #b2cee1;
+			    content: "";
+			    left: 36.7%;
+			    top: 10px;
+			    bottom: 0;
+			    position: absolute;
+			    width: 1px;
+			    margin-left: -1px;
+			    margin-top: -10px;
+			    height: 100vh;
+			    min-height: 9999999px;
+			    overflow: hidden;
+			    display: block;
+			}
+			#course .inner .main>li{
+				list-style: none;
+				padding-left: 330px;
+				overflow: hidden;
+				margin-bottom: 50px;
+				position: relative;
+			}
+			#course .inner .main>li>span{
+				background: #ffc752;
+				display: inline-block;
+				font-size: 20px;
+				color: #fff;
+				padding: 7px 26px;
+				border-radius: 30px;
+				float: left;
+				position: relative;
+			}
+			#course .inner .main>li>span.animateleft{
+				animation: aaa 1s forwards;
+			}
+			@-moz-keyframes aaa{
+				from{left: -100px;opacity: 0;}
+				to{left: 0;opacity: 1;}
+			}
+			#course .inner .main>li>span:after{
+				content: "\02022";
+			    color: #0069b3;
+			    position: absolute;
+			    right: -39px;
+			    top: 50%;
+			    margin-top: -22px;
+			    font-size: 40px;
+			    z-index: 2;
+			}
+			#course .inner .main>li>div{
+				float: left;
+				padding-left: 50px;
+				position: relative;
+			}
+			#course .inner .main>li>div>div{
+				padding: 9px;
+				overflow: hidden;
+			}
+			#course .inner .main>li>div>div>span{
+				margin-right: 60px;
+				color: #0069b3;
+				float: left;
+				width: 40px;
+			}
+			#course .inner .main>li>div>div>p{
+				color: #000;
+				float: left;
+				line-height: 20px;
+			}
+			#map{
+				width: 100%;
+				height: 477px;
+				background: url(images/address_map.png) no-repeat;
+			}
+			#contact{
+				width: 100%;
+				padding: 30px 0;
+			}
+			#contact .inner{
+				width: 930px;
+				margin: 0 auto;
+				overflow: hidden;
+			}
+			#contact .inner>h2{
+				color: #747474;
+				font-size: 20px;
+				padding: 10px 0;
+				padding-left: 450px;
+			}
+			#contact .inner>P{
+				color: #bab9b9;
+				font-size: 14px;
+				padding-left: 450px;
+				padding-bottom: 30px;
+			}
+			#contact .inner>ul{
+				width: 320px;
+				float: left;
+			}
+			#contact .inner>ul>li{
+				list-style: none;
+				margin-bottom: 30px;
+			}
+			#contact .inner>ul>li>img{
+				vertical-align: top;
+			}
+			#contact .inner>ul>li>div{
+				width: 80%;
+				display: inline-block;
+				padding-left: 8px;
+			}
+			#contact .inner>ul>li>div>h2{
+				width: 100%;
+			    color: #000;
+			    font-size: 18px;
+			    font-weight: bold;
+			    padding: 8px 0;
+			}
+			#contact .inner>ul>li>div>p{
+				color: #676767;
+			    font-size: 14px;
+			    padding: 5px 0;
+			    
+			}
+			#contact .inner>form{
+				width: 575px;
+				float: left;
+				margin-left: 20px;
+			}
+			#contact .inner>form>input[type='text']{
+				width: 100%;
+				border: 1px solid #dddddd;
+				border-radius: 4px;
+				height: 48px;
+				margin-bottom: 20px;
+			}
+			#contact .inner>form>textarea{
+				
+				width: 100%;
+				border: 1px solid #dddddd;
+				border-radius: 4px;
+				height: 117px;
+				margin-bottom: 20px;
+				resize: none;
+			}
+			#contact .inner>form>input[type='submit']{
+				width: 154px;
+				height: 50px;
+				float: right;
+				outline: none;
+				border: none;
+				border-radius: 4px;
+				background: #ff7f00;
+				font-size: 25px;
+				color: #fff;
+			}

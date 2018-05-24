@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ipplus360.dao.VisitLogDao">
+    <sql id="visitLog_column">
+        ip, user_agent, source, visit_time
+    </sql>
+
+    <insert id="add" parameterType="VisitLog">
+        INSERT INTO ipplus360_log.visit_log(<include refid="visitLog_column"/>)
+        VALUES
+        (#{ip}, #{userAgent}, #{source}, #{visitTime})
+    </insert>
+
+    <insert id="addBatch" parameterType="java.util.List" useGeneratedKeys="true" keyProperty="id">
+        insert into
+        ipplus360_log.visit_log (<include refid="visitLog_column"/>)
+        values
+            <foreach collection="list" item="visitLog" index="index" separator=",">
+                (#{visitLog.ip}, #{visitLog.userAgent}, #{visitLog.source}, #{visitLog.visitTime})
+            </foreach>
+    </insert>
+    
+    <select id="getIPCounts" parameterType="java.util.Date" resultType="java.lang.Long">
+        SELECT COUNT(DISTINCT(ip))
+        FROM ipplus360_log.visit_log
+        WHERE TO_DAYS(visit_time) = TO_DAYS(#{visitTime})
+    </select>
+
+    <select id="getSources" resultType="java.util.Map">
+        SELECT source AS asource, COUNT(DISTINCT(ip)) AS sourceCounts
+        FROM ipplus360_log.visit_log
+        WHERE TO_DAYS(visit_time) = TO_DAYS(#{visitTime})
+        AND source NOT LIKE 'http://mall.ipplus360.com%' AND source NOT LIKE 'https://mall.ipplus360.com%'
+        GROUP BY source ORDER BY sourceCounts DESC
+    </select>
+    
+    <select id="getCountsFromGw" parameterType="java.util.Date" resultType="java.lang.Long">
+        SELECT COUNT(DISTINCT(ip))
+        FROM ipplus360_log.visit_log
+        WHERE TO_DAYS(visit_time) = TO_DAYS(#{visitTime})
+        AND (source LIKE 'http://ipplus360.com%' OR source LIKE 'http://www.ipplus360.com%')
+    </select>
+
+</mapper>

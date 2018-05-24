@@ -1,0 +1,115 @@
+.head{
+	padding: 20px 0;
+    width: 1200px;
+    margin: auto;
+}
+.i-error{
+	display: inline-block;
+    width: 16px;
+    height: 16px;
+    vertical-align: middle;
+    margin-bottom: 3px;
+    margin-right: 5px;
+	background:url(../../statics/images/icon.png) no-repeat;
+	background-position: -17px -100px;
+}
+#pop{
+	padding:65px 70px;
+	/*display: none;*/
+	width: 543px;
+	margin: 20px auto 0;
+}
+#pop>h2{
+	padding:22px 0;
+}
+#pop>h2>span{
+	color:#7e7e7e;
+	font-size: 22px;
+}
+#pop>h2>span.two{
+	color:#7e7e7e;
+	font-size: 16px;
+	float: right;
+	line-height: 22px;
+}
+#pop p.regError{
+	text-align: left;
+	background: #fff;
+	color: #e22;
+	font-size: 14px;
+	padding: 8px 0;
+	height: 35px;
+}
+#pop>h2>span.two>a{
+	color:#3fa9f5;
+	font-size: 16px;
+}
+#pop #name{
+	width: 100%;
+	border: 1px solid #d1e4f1;
+	margin-bottom: 20px;
+	font-size: 16px;
+	outline: none;
+	padding: 15px 0 15px 10px;
+	box-sizing: border-box;
+	color: #757575;
+}
+#pop #pwd{
+	width: 100%;
+	border: 1px solid #d1e4f1;
+	font-size: 16px;
+	outline: none;
+	padding: 15px 0 15px 10px;
+	box-sizing: border-box;
+}
+#pop #pwd1{
+	width: 100%;
+	border: 1px solid #d1e4f1;
+	font-size: 16px;
+	outline: none;
+	padding: 15px 0 15px 10px;
+	color: #757575;
+}
+#pop .yzm{
+	width: 100%;
+	padding: 55px 0 10px 0;
+	overflow: hidden;
+	
+}
+#pop .yzm>span{
+	display: inline-block;
+	width: 25%;
+	height: 50px;
+	border: 1px solid #d1e4f1;
+	float: left;
+}
+#pop .yzm #yzm{
+	width: 70%;
+	border: 1px solid #d1e4f1;
+	padding: 15px 0 15px 10px;
+	outline: none;
+	float: right;
+	font-size: 16px;
+	color: #757575;
+	height: 50px;
+}
+#pop>button{
+	display: block;
+	width: 100%;
+	color: #fff;
+	background: #3fa9f5;
+	line-height: 50px;
+	border: none;
+	outline: none;
+	cursor: pointer;
+	font-size: 20px;
+}
+#pop>p{
+	text-align: right;
+}
+#pop>p>a{
+	color: #3fa9f5; 
+	font-size: 16px;
+	line-height: 35px;
+}
+.phcolor{ color:#999;}

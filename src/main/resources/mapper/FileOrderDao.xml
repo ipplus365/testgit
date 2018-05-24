@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ipplus360.dao.FileOrderDao">
+
+	<sql id="fileOrder_column">
+		id, attrs, create_time, expire_time, user_id, order_id, download_counts,
+		`file`, free, attr_ids, ip, version
+	</sql>
+
+
+	<insert id="add" parameterType="FileOrder">
+		INSERT INTO
+		file_orders(attrs, create_time, expire_time, user_id, order_id, download_counts, `file`,
+		ip, version, free, attr_ids)
+		VALUES (#{attrs}, #{createTime},
+		#{expireTime}, #{userId}, #{orderId}, #{downloadCounts}, #{file},
+		#{ip}, #{version}, #{free}, #{attrIds})
+	</insert>
+
+	<select id="getById" resultType="FileOrder">
+		SELECT
+		<include refid="fileOrder_column" />
+		FROM file_orders WHERE id = #{id}
+	</select>
+	
+	<select id="getAllCountByUserId" resultType="Integer">
+		SELECT count(*)
+		FROM file_orders WHERE user_id = #{userId}
+	</select>
+	
+	
+
+	<select id="getByUserId" resultType="FileOrder">
+		SELECT
+		<include refid="fileOrder_column" />
+		FROM file_orders WHERE user_id = #{userId}
+		limit #{currPage},#{pageSize}
+	</select>
+
+	<select id="getByUserIdAndFileId" resultType="FileOrder">
+		SELECT
+		<include refid="fileOrder_column" />
+		FROM file_orders WHERE id = #{fileId} AND user_id = #{userId}
+	</select>
+
+	<select id="getByOrderId" resultType="FileOrder">
+		SELECT
+		<include refid="fileOrder_column" />
+		FROM file_orders WHERE order_id = #{orderId}
+	</select>
+
+	<select id="getByAttrIdsAndVersion" resultType="FileOrder">
+		SELECT
+		<include refid="fileOrder_column" />
+		FROM file_orders WHERE user_id = #{userId} AND attr_ids = #{attrIds}
+		AND version = #{currVer}
+	</select>
+
+</mapper>

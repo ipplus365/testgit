@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+		PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ipplus360.dao.DiscountDao">
+
+	<!--     <select id="getDiscount" parameterType="Map" resultType="Discount" >
+            SELECT
+            id,package_amount,discount
+            FROM discount WHERE package_amount=#{amount}
+        </select> -->
+
+	<select id="getDiscounts" parameterType="Discount" resultType="Discount" >
+		SELECT
+		id,
+		accuracy_id AS accuracyId,
+		price_package_id AS pricePackageId,
+		package_amount AS packageAmount,
+		discount,
+		amount,
+		price,
+		total_price,
+		unit
+		FROM   discount
+		WHERE
+		price_package_id = #{pricePackageId}
+		AND package_amount = #{packageAmount}
+		ORDER BY package_amount DESC  limit 1
+	</select>
+
+</mapper>

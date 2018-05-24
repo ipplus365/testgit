@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ipplus360.dao.OrderLogDao">
+
+    <sql id="orderLog_column">
+        id,operate_date AS operateDate,operator,`type`,order_serial
+    </sql>
+    <!-- 查询定位精度 -->
+    <select id="getByOrderSerial" parameterType="String" resultType="orderLog" >
+        SELECT
+          <include refid="orderLog_column"/>
+        FROM order_log
+        WHERE order_serial = {orderSerial} ORDER BY operate_date ASC
+    </select>
+
+    <insert id="insert" parameterType="orderLog" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO order_log (operate_date,operator,`type`,order_serial)
+        VALUES (#{operateDate}, #{operator}, #{type}, #{orderSerial})
+    </insert>
+    
+
+    
+</mapper>

@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ipplus360.dao.InvoiceDao">
+   	
+    <sql id="invoice_cloumn">
+        id,
+		order_id AS orderId,
+		user_id AS userId,
+		org_name AS orgName,
+		tax_id AS taxId,
+		reg_address AS regAddress,
+		reg_mobile AS regMobile,
+		bank,
+		bank_account AS bankAccount,
+		user_contacts AS userContacts,
+		user_mobile AS userMobile,
+		<!-- user_province AS userProvince,
+		user_city AS userCity,
+		user_area AS userArea, -->
+		user_address AS userAddress
+    </sql>
+    <!-- 查询定位精度 -->
+    <select id="getById" parameterType="Long" resultType="invoice" >
+        SELECT 
+        	<include refid="invoice_cloumn"/> 
+       	FROM 
+       		invoice 
+   		WHERE id=#{id}
+    </select>
+    
+    <!-- 根据订单序列号查询发票信息 -->
+    <select id="getByOrderId" resultType="invoice" > 
+		SELECT 
+        	org_name AS orgName,
+			tax_id AS taxId,
+			reg_address AS regAddress,
+			reg_mobile AS regMobile,
+			bank,
+			bank_account AS bankAccount,
+			user_contacts AS userContacts,
+			user_mobile AS userMobile,
+			<!-- user_province AS userProvince,
+			user_city AS userCity,
+			user_area AS userArea, -->
+			user_address AS userAddress
+    	FROM 
+    		invoice 
+    	WHERE user_id =#{arg0} AND order_id=#{arg1} 
+    </select>
+    
+    <!-- 根据用户ID查询发票信息 -->
+    <select id="getByUserId"  parameterType="Long" resultType="invoice" > 
+		SELECT 
+        	org_name AS orgName,
+			tax_id AS taxId,
+			reg_address AS regAddress,
+			reg_mobile AS regMobile,
+			bank,
+			bank_account AS bankAccount,
+			user_contacts AS userContacts,
+			user_mobile AS userMobile,
+			<!-- user_province AS userProvince,
+			user_city AS userCity,
+			user_area AS userArea, -->
+			user_address AS userAddress
+    	FROM 
+    		invoice 
+    	WHERE user_id=#{userId}
+    	ORDER BY id DESC limit 1
+    </select>
+    
+    <!-- 添加发票信息 -->
+    <insert id="insert" parameterType="invoice" useGeneratedKeys="true" keyProperty="id">
+		INSERT INTO invoice
+			(user_id, order_id, org_name, tax_id, reg_address, reg_mobile, bank, bank_account, user_contacts, user_mobile, <!-- user_province, user_city, user_area, --> user_address)
+		VALUES 
+			(#{userId}, #{orderId}, #{orgName}, #{taxId}, #{regAddress}, #{regMobile}, #{bank}, #{bankAccount}, #{userContacts}, #{userMobile},<!--  #{userProvince}, #{userCity}, #{userArea}, --> #{userAddress})
+    </insert>
+    
+    <!-- 更新发票信息 -->
+    <update id="update" parameterType="invoice">
+       UPDATE invoice 
+       <set>
+	        <if test="orgName != null"> org_name = #{orgName},</if>
+	        <if test="taxId != null"> tax_id = #{taxId},</if>
+	        <if test="regAddress != null"> reg_address = #{regAddress},</if>
+	        <if test="regMobile != null"> reg_mobile = #{regMobile},</if>
+	        <if test="bank != null"> bank = #{bank},</if>
+	        <if test="bankAccount != null"> bank_account = #{bankAccount}, </if>
+	        <if test="userContacts != null"> user_contacts = #{userContacts}, </if>
+	        <if test="userMobile != null"> user_mobile = #{userMobile}, </if>
+<!-- 	        <if test="userProvince != null"> user_province = #{userProvince}, </if>
+	        <if test="userCity != null"> user_city = #{userCity}, </if>
+	        <if test="userArea != null"> user_area = #{userArea}, </if> -->
+	        <if test="userAddress != null"> user_address = #{userAddress}</if>
+       </set>
+       WHERE
+       	order_id = #{orderId}
+   </update>
+    
+</mapper>

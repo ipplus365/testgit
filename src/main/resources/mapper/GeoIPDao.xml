@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+		PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ipplus360.dao.GeoIPDao">
+	<sql id="geoIP_column">
+		id, minip, maxip, continent, areaCode, country, multiarea, zipcode, timezone, accuracy, scene, owner, `user`, source, correctness, consistency
+	</sql>
+
+    <sql id="district_column">
+        id, minip, maxip, continent, areaCode, country, multiarea, `user`
+    </sql>
+
+    <sql id="scene_column">
+        id, scene
+    </sql>
+
+	<select id="getById" resultType="GeoIP">
+		SELECT
+		<include refid="geoIP_column"/>
+		FROM ipplus360_data.aiwen_geoip_${coord}
+		WHERE id=#{id}
+	</select>
+
+	<!--正式包查询次数记录-->
+	<select id="getByMinIP" resultType="GeoIP">
+		SELECT
+		<include refid="geoIP_column"/>
+		FROM ipplus360_data.aiwen_geoip_${coord}
+		WHERE minip&lt;=#{minip} ORDER BY minip DESC limit 1;
+		UPDATE tokens
+		<set>
+			counts = counts - 1
+		</set>
+		WHERE token = #{token}
+	</select>
+
+	<!--正式包查询次数记录, 含场景-->
+	<select id="getByMinIPWithScene" resultType="GeoIP">
+		SELECT
+		<include refid="geoIP_column"/>
+		FROM ipplus360_data.aiwen_geoip_${coord}
+		WHERE minip&lt;=#{minip} ORDER BY minip DESC limit 1;
+		UPDATE tokens
+		<set>
+			counts = counts - 1
+		</set>
+		WHERE token = #{token};
+		UPDATE tokens
+		<set>
+			scene_counts = scene_counts - 1
+		</set>
+		WHERE token = #{sceneToken}
+	</select>
+
+	<!--测试包查询次数记录-->
+	<select id="getByMinIPTest" resultType="GeoIP">
+		SELECT
+		<include refid="geoIP_column"/>
+		FROM ipplus360_data.aiwen_geoip_${coord}
+		WHERE minip&lt;=#{minip} ORDER BY minip DESC limit 1;
+		UPDATE tokens
+		<set>
+			test_count = test_count - 1
+		</set>
+		WHERE token = #{token}
+	</select>
+
+	<!--测试包查询次数记录-->
+	<select id="getByMinIPTestWithScene" resultType="GeoIP">
+		SELECT
+		<include refid="geoIP_column"/>
+		FROM ipplus360_data.aiwen_geoip_${coord}
+		WHERE minip&lt;=#{minip} ORDER BY minip DESC limit 1;
+		UPDATE tokens
+		<set>
+			test_count = test_count - 1
+		</set>
+		WHERE token = #{token};
+		UPDATE tokens
+		<set>
+			scene_counts = scene_counts - 1
+		</set>
+		WHERE token = #{sceneToken};
+	</select>
+
+	<select id="getLocationByIp" resultType="com.ipplus360.domain.LoginLocation">
+		SELECT country, multiarea
+		FROM ipplus360_data.aiwen_geoip_bd
+		WHERE minip&lt;=#{minip} ORDER BY minip DESC limit 1;
+	</select>
+
+	<select id="getDistrictInfo" parameterType="com.ipplus360.dto.LocateProps" resultType="GeoIP">
+		SELECT
+		<include refid="district_column"/>
+		FROM ipplus360_data.aiwen_geoip_district_${coordSuffix}
+		WHERE minip&lt;=#{locateIpL} ORDER BY minip DESC limit 1;
+
+	</select>
+
+	<select id="getDistrictInfoNormal" parameterType="com.ipplus360.dto.LocateProps" resultType="GeoIP">
+		SELECT
+		<include refid="district_column"/>
+		FROM ipplus360_data.aiwen_geoip_district_${coordSuffix}
+		WHERE minip&lt;=#{locateIpL} ORDER BY minip DESC limit 1;
+		UPDATE tokens
+		<set>
+			counts = counts - 1
+		</set>
+		WHERE token = #{key}
+	</select>
+
+	<select id="getSceneInfo" parameterType="com.ipplus360.dto.LocateProps" resultType="GeoIP">
+		SELECT
+		<include refid="scene_column"/>
+		FROM ipplus360_data.aiwen_geoip_${coordSuffix}
+		WHERE minip&lt;=#{locateIpL} ORDER BY minip DESC limit 1;
+		UPDATE tokens
+		<set>
+			scene_counts = scene_counts - 1
+		</set>
+		WHERE token = #{key}
+	</select>
+</mapper>

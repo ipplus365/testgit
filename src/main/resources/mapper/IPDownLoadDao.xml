@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ipplus360.dao.IPDownLoadDao">
+	<sql id="ipDownload_Column">
+	    id,
+	    version_id AS versionId,
+	    file_name AS fileName,
+	    file_type AS fileType,
+		available
+	</sql>
+	<!-- 根据内部版本号查询 -->
+	<select id="getByVersionId" parameterType="Long" resultType="download">
+		SELECT
+			<include refid="ipDownload_Column"/>
+		FROM  ip_download
+		WHERE version_id = #{versionId}
+	</select>
+
+	<select id="getByAvailable" parameterType="boolean" resultType="download">
+		SELECT
+			<include refid="ipDownload_Column"/>
+		FROM  ip_download
+		WHERE available = #{available}
+	</select>
+</mapper>

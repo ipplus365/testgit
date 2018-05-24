@@ -1,0 +1,234 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+		PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ipplus360.dao.CartItemDao">
+
+	<sql id="orderItem_column">
+		cart_item.id,
+		cart_item.item_num,
+		cart_item.carts_id,
+		cart_item.product_id,
+		cart_item.price_package_id,
+		cart_item.price,
+		cart_item.discount,
+		cart_item.original_price,
+		cart_item.item_type,
+		cart_item.attr_ids,
+		products.sku_id,
+		products.product_name,
+		products.icon_url,
+		products.resource_ids,
+		products.price AS
+		productPrice,
+		products.available,
+		products.description AS
+		productsDescription,
+		products.pageviews,
+		products.evaluate,
+
+		price_package.product_id,
+		price_package.`type`,
+		price_package.amount,
+		price_package.amount_str,
+		price_package.accuracy,
+		price_package.price AS
+		pricePackagePrice,
+		price_package.discount/10 AS discount,
+		price_package.start_date,
+		price_package.end_date,
+		price_package.description AS pricePackageDescription,
+		price_package.unit,
+		price_package.counts,
+		price_package.available AS
+		p_available,
+
+		accuracy.id AS accuracy_id,
+		accuracy.accuracy AS accuracys
+	</sql>
+
+
+
+	<resultMap type="cartItem" id="cartItemResult">
+		<id column="id" property="id" />
+		<result column="item_num" property="itemNum" />
+		<result column="carts_id" property="cartId" />
+		<result column="price" property="price" />
+		<result column="discount" property="discount" />
+		<result column="original_price" property="originalPrice" />
+		<result column="item_type" property="itemType" jdbcType="VARCHAR" />
+		<result column="attr_ids" property="attrIds" />
+		<association property="product" javaType="product">
+			<!-- id：关联查询的唯一表示 column:指定用于唯一表示产品信息的列 javaType:映射到Product的哪个属性 -->
+			<id column="product_id" property="id" />
+			<result column="sku_id" property="skuId" />
+			<result column="product_name" property="productName" />
+			<result column="icon_url" property="iconUrl" />
+			<result column="resource_ids" property="resourceIds" />
+			<result column="productPrice" property="price" />
+			<result column="available" property="available" />
+			<result column="productsDescription" property="description" />
+			<result column="pageviews" property="pageviews" />
+			<result column="evaluate" property="evaluate" />
+		</association>
+		<association property="pricePackage" javaType="pricepackage">
+			<!-- id：关联查询价格套餐包的唯一表示 column:指定用于唯一表示价格套餐包信息的列 javaType:映射到PricePackage的哪个属性 -->
+			<id column="price_package_id" property="id" />
+			<result column="product_id" property="productId" />
+			<result column="type" property="type" />
+			<result column="amount" property="amount" />
+			<result column="amount_str" property="amountStr" />
+			<result column="packagetype" property="packagetype" />
+			<result column="pricePackagePrice" property="price" />
+			<result column="discount" property="discount" />
+			<result column="start_date" property="startDate" />
+			<result column="end_date" property="endDate" />
+			<result column="pricePackageDescription" property="description" />
+			<result column="unit" property="unit" />
+			<result column="counts" property="counts" />
+			<result column="p_available" property="available" />
+
+			<association property="accuracy" javaType="accuracy">
+				<!-- id：关联查询定位精度的唯一表示 column:指定用于唯一表示价格套餐包信息的列 javaType:映射到PricePackage的哪个属性 -->
+				<id column="accuracy_id" property="id" />
+				<result column="accuracys" property="accuracy" />
+			</association>
+		</association>
+	</resultMap>
+
+	<!-- 根据ID查询购物项 -->
+	<select id="getById" resultMap="cartItemResult">
+		SELECT
+		cart_item.id,
+		cart_item.item_num,
+		cart_item.carts_id,
+		cart_item.product_id,
+		cart_item.price_package_id,
+		cart_item.price,
+		cart_item.discount,
+		cart_item.original_price,
+		cart_item.item_type,
+		cart_item.attr_ids
+		FROM
+		cart_item
+		WHERE
+		cart_item.id = #{arg0} AND
+		cart_item.carts_id = #{arg1}
+
+		<!-- SELECT <include refid="orderItem_column"/> FROM cart_item,products,price_package,accuracy 
+			WHERE cart_item.product_id = products.id AND price_package.accuracy = accuracy.id 
+			AND cart_item.price_package_id = price_package.id AND cart_item.id = #{arg0} 
+			AND cart_item.carts_id = #{arg1} -->
+	</select>
+
+	<!-- 根据购物车ID查询购物项 -->
+	<select id="getAllByCartId" parameterType="Long" resultType="cartItem">
+		SELECT
+		id AS id,
+		discount,
+		original_price AS originalPrice,
+		carts_id AS
+		cartId,
+		product_Id AS "product.id",
+		price_package_id AS
+		"pricePackage.id",
+		price, attr_ids, item_type
+		FROM
+		cart_item
+		WHERE
+		carts_id = #{cartId}
+	</select>
+
+	<!-- 查询所有购物车 -->
+	<select id="getAll" resultType="cartItem">
+		SELECT
+		id AS id,
+		discount,
+		original_price AS originalPrice,
+		carts_id AS cartId,
+		product_Id AS
+		"product.id",
+		price_package_id AS "pricePackage.id",
+		price, attr_ids,
+		item_type
+		FROM
+		cart_item
+	</select>
+
+	<!-- 根据实体查询购物项 -->
+	<select id="getByCartItem" parameterType="cartItem" resultType="cartItem">
+		SELECT
+		id AS id,
+		discount,
+		original_price AS originalPrice,
+		item_num AS
+		itemNum,
+		carts_id AS cartId,
+		product_Id AS "product.id",
+		price_package_id AS "pricePackage.id",
+		price, attr_ids, item_type
+		FROM
+		cart_item
+		<where>
+			<if test="id != null"> id = #{id} </if>
+			<if test="cartId != null"> and carts_id = #{cartId} </if>
+			<if test="product.id != null"> and product_Id = #{product.id} </if>
+			<if test="pricePackage.id != null"> and price_package_id = #{pricePackage.id} </if>
+			<if test="price != null"> and price = #{price}</if>
+			<if test="attrIds !=null ">and attr_ids = #{attrIds}</if>
+			<if test="itemType !=null ">and item_type = #{itemType}</if>
+		</where>
+	</select>
+
+	<!-- 添加购物项 -->
+	<insert id="insert" parameterType="cartItem">
+		INSERT INTO cart_item
+		(carts_id, discount, original_price, item_num, product_Id,
+		price_package_id, price, attr_ids, item_type)
+		VALUES (#{cartId},
+		#{discount}, #{originalPrice}, #{itemNum}, #{product.id},
+		#{pricePackage.id}, #{price}, #{attrIds}, #{itemType})
+	</insert>
+
+	<!-- 根据ID删除购物项 -->
+	<delete id="delete" parameterType="Long">
+		DELETE FROM cart_item WHERE id
+		= #{id}
+	</delete>
+
+	<!-- 根据用户ID删除购物项(清空购物车) -->
+	<delete id="deleteByCartId" parameterType="Long">
+		DELETE FROM cart_item
+		WHERE carts_id = #{cartId}
+	</delete>
+
+	<!-- 更新购物车 -->
+	<update id="update" parameterType="cartItem">
+		UPDATE cart_item
+		<set>
+			<if test="cartId != null"> carts_id = #{cartId},</if>
+			<if test="discount != null"> discount = #{discount},</if>
+			<if test="originalPrice != null"> original_price = #{originalPrice},</if>
+			<if test="itemNum != null"> item_num = #{itemNum},</if>
+			<if test="product.id != null"> product_id = #{product.id},</if>
+			<if test="pricePackage.id != null"> price_package_id = #{pricePackage.id}, </if>
+			<if test="price !=null "> price = #{price},</if>
+			<if test="attrIds !=null "> attr_ids = #{attrIds},</if>
+			<if test="itemType !=null "> item_type = #{itemType}</if>
+		</set>
+		WHERE
+		id = #{id}
+	</update>
+
+	<select id="get" resultType="cartItem">
+		SELECT *
+		from cart_item WHERE id = 584
+	</select>
+
+	<select id="get1" resultType="cartItem">
+		SELECT *
+		from cart_item WHERE id = 585
+	</select>
+
+</mapper>

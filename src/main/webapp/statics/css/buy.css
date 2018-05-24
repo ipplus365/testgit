@@ -1,0 +1,580 @@
+			#main{
+				width: 100%;
+				background: #e4e4e4;
+				padding-top: 20px;
+				padding-bottom: 40px;
+			}
+			#main .main_inner{
+				width: 1266px;
+				margin: 0 auto;
+				overflow: hidden;
+			}
+			/*左侧tab选项卡*/
+			#main .main_inner>.left{
+				background: #fff;
+				float: left;
+				border-right: 1px solid #d6d6d6;
+			}
+			#main .main_inner>.left li{
+				width: 268px;
+				height: 100px;
+				line-height: 100px;
+				cursor: pointer;
+				list-style: none;
+				padding: 0 50px;
+				color: #363636;
+			}
+			#main .main_inner>.left li.active{
+				background: #3fa9f5;
+				color: #fff;
+			}
+			#main .main_inner>.left li.one{
+				border-bottom: 1px solid #d6d6d6;
+			}
+			#main .main_inner>.left li.two{
+				border-bottom: 1px solid #d6d6d6;
+			}
+			#main .main_inner>.left li>img{
+				vertical-align: middle;
+				margin-bottom: 8px;
+				margin-right: 10px;
+			}
+			/*右侧商品选项具体内容*/
+			#main .main_inner>.right{
+				width: 995px;
+				float: left;
+				padding: 0 20px;
+				background: #fff;
+			}
+			#main .main_inner .right>li,.district .API_slide>li,.district .API_download>li,.scene .API_slide>li,.scene .API_download>li{
+				color: #363636;
+				list-style: none;
+				padding: 40px 0px 40px 10px;
+				font-size: 16px;
+				border-bottom: 1px solid #f0f0f0;
+				overflow: hidden;
+			}
+			#main .main_inner .district .API_download>li{
+				padding: 20px 0 20px 10px;
+			}
+			#main .main_inner .right li .spacing,.district .API_slide li .spacing,.district .API_download .spacing{
+				letter-spacing: 1px;
+			}
+			#main .main_inner .right li .black1,.district .API_slide li .black1,.district .API_download .black1{
+				color: #000;
+			}
+			#main .main_inner .right li .black,.district .API_slide li .black,.district .API_download .black{
+				color: #363636;
+			}
+			#main .main_inner .right li .orange,.district .API_slide li .orange,.district .API_download .orange{
+				color: #f37530;
+			}
+			#main .main_inner .right li .light,.district .API_slide li .light,.district .API_download .light{
+				color: #999999;
+			}
+			#main .main_inner .right li .midGray,.district .API_slide li .midGray,.district .API_download .midGray{
+				color: #888888;
+			}
+			#main .main_inner .right li .normal,.district .API_slide li .normal,.district .API_download .normal{
+				font-weight: normal;
+			}
+			#main .main_inner .right li .bold,.district .API_slide li .bold,.district .API_download .bold{
+				font-weight: bold;
+			}
+			#main .main_inner .right li .size16,.district .API_slide li .size16,.district .API_download .size16{
+				font-size: 16px;
+			}
+			#main .main_inner .right li .size12{
+				font-size: 12px;
+			}
+			#main .main_inner .right li .size14,.district .API_slide li .size14,.district .API_download .size14{
+				font-size: 13px;
+			}
+			#main .main_inner .right li .size18,.district .API_slide li .size18,.district .API_download .size18{
+				font-size: 18px;
+			}
+			#main .main_inner .right li .size24,.district .API_slide li .size24,.district .API_download .size24{
+				font-size: 24px;
+			}
+			#main .main_inner .right li .size28,.district .API_slide li .size28,.district .API_download .size28{
+				font-size: 28px;
+			}
+			#main .main_inner .right li .mr50,.district .API_slide li .mr50,.district .API_download .mr50{
+				margin-right: 50px;
+			}
+			#main .main_inner .right li .ml50,.district .API_slide li .ml50,.district .API_download .ml50{
+				margin-left: 50px;
+			}
+			#main .main_inner .right li .block{
+				display: inline-block;
+				width: 120px;
+			}
+			#main .main_inner .right>li ul,.district .API_slide>li ul,.district .API_download>li ul,.scene .API_slide>li ul,.scene .API_download>li ul{
+				display: inline-block;
+				vertical-align: middle;
+			}
+			#main .main_inner .right>li ul>li,.district .API_slide>li ul>li,.district .API_download>li ul>li,.scene .API_slide>li ul>li,.scene .API_download>li ul>li{
+				text-align: center;
+				line-height: 28px;
+				list-style: none;
+				float: left;
+				width: 50px;
+				height: 28px;
+				color: #6e6e6e;
+				font-size: 14px;
+				font-weight: normal;
+				border: 1px solid #d7d4d4;
+				border-right: none;
+				cursor: pointer;
+			}
+			#main .main_inner .right li ul>li.last,.district .API_slide>li ul>li.last,.district .API_download>li ul>li.last{
+				border: 1px solid #d7d4d4;
+			}
+			#main .main_inner .right>li>ul>li.active,.district .API_slide>li>ul>li.active,.scene li ul >li.active{
+				background: #47a4eb;
+				color: #fff;
+			}
+			#main .main_inner .district .API_download li .version_right{
+				display: inline-block;
+				width: 820px;
+				padding: 35px 0;
+				border-bottom: 1px solid #F0F0F0;
+			}
+			#main .main_inner .district .API_download li .coordinate_right{
+				display: inline-block;
+				width: 820px;
+				padding: 35px 0;
+				border-bottom: 1px solid #F0F0F0;
+			}
+			#main .main_inner .right li>div.num{
+				display: inline-block;
+				vertical-align: middle;
+			}
+			#main .main_inner .right li>div.num>span{
+				color: #d4d4d4;
+				display: inline-block;
+				width: 32px;
+				height: 27px;
+				text-align: center;
+				border: 1px solid #D4D4D4;
+				font-size: 22px;
+				float: left;
+				cursor: pointer;
+				-webkit-user-select: none;
+				-moz-user-select: none;
+				-ms-user-select: none;
+			}
+			#main .main_inner .right li>div.num>input{
+				width: 68px;
+				border: none;
+				border-top: 1px solid #D4D4D4;
+				border-bottom: 1px solid #D4D4D4;
+				text-align: center;
+				padding: 4px 0;
+				float: left;
+				height: 27px;
+				line-height: 27px;
+			}
+			#main .main_inner .right li table{
+				display: inline-block;
+				vertical-align: top;
+			}
+			#main .main_inner .right li table tr td{
+				color: #545454;
+				padding: 15px 20px;
+				border: 1px solid #F0F0F0;
+				font-size: 13px;
+				font-weight: normal;
+				vertical-align: middle;
+				line-height: 20px;
+			}
+			#main .main_inner .right li table tr td.bg{
+				font-size: 15px;
+				background: #f8f8f8;
+			}
+			#main .main_inner .right>li>.btnDiv{
+				float: right;
+				vertical-align: middle;
+			}
+			#main .main_inner .right>li>.btnDiv>button{
+				display: inline-block;
+				width: 139px;
+				text-align: center;
+				outline: none;
+				border: none;
+				padding: 11px 0;
+				border-radius: 5px;
+				font-size: 16px;
+				cursor: pointer;
+				line-height: 1;
+			}
+			#main .main_inner .right>li>.btnDiv>input{
+				width: 139px;
+				text-align: center;
+				outline: none;
+				border: none;
+				padding: 12px 0;
+				border-radius: 5px;
+				font-size: 16px;
+				cursor: pointer;
+				line-height: 1;
+			}
+			#main .main_inner .right>li>.btnDiv>a{
+				display: inline-block;
+				width: 139px;
+				text-align: center;
+				padding: 11px 0;
+				border-radius: 5px;
+				font-size: 16px;
+				border: 1px solid #ff6300;
+				color: #ff6300;
+				background: #fff;
+				margin-right: 15px;
+			}
+			#main .main_inner .right>li>.btnDiv>.addCart{
+				border: 1px solid #ff6300;
+				color: #ff6300;
+				background: #fff;
+				margin-right: 15px;
+			}
+			#main .main_inner .right>li>.btnDiv>.pay{
+				background:#ff6300;
+				color: #fff;
+			}
+			#main .main_inner .district li.no_padding{
+				padding-top: 2px;
+				padding-bottom: 2px;
+				padding-left: 0;
+				padding-right: 0;
+				cursor: pointer;
+			}
+			#main .main_inner .right li.no_border{
+				border: none;
+				padding: 0 0  0 10px;
+			}
+			#main .main_inner .right>li>h2{
+				color: #000;
+				font-size: 24px;
+				padding: 30px 0 30px 10px;
+				background: #F2F2F2;
+				font-weight: bolder;
+			}
+			#main .main_inner .district>li>h2>i{
+				color: #545454;
+				font-size:24px;
+				margin-left: 20px;
+			}
+			#main .main_inner .right .API_slide>li ul.API_list>li{
+				width: 100px;
+				position: relative;
+			}
+			#main .main_inner .right .API_download li ul.API_list>li{
+				width: 83px;
+				position: relative;
+			}
+			#main .main_inner .right .API_slide li ul.API_list>li>span{
+				position: absolute;
+				background: #f37530;
+				width: 84px;
+				height: 18px;
+				left: 8px;
+				top: -30px;
+				font-size: 12px;
+				line-height: 18px;
+				text-align: center;
+			}
+			#main .main_inner .right .API_slide li ul.API_list>li>span.district_free{
+				width: 100px;
+				left: 0;
+				height: 22px;
+				top: -33px;
+				font-size: 14px;
+				line-height: 22px;
+			}
+			#main .main_inner .right .API_download li ul.API_list>li>span{
+				position: absolute;
+				background: #f37530;
+				width: 83px;
+				height: 18px;
+				left: 0px;
+				top: -30px;
+				font-size: 12px;
+				line-height: 18px;
+				text-align: center;
+			}
+			#main .main_inner .right .API_download li ul.API_list>li>span.gift{
+				width: 21px;
+				height: 21px;
+				border-radius: 50%;
+				left:68px;
+				top: -10px;
+			}
+			#main .main_inner .right .API_slide>li ul.API_list>li>span>b,.API_download>li ul.API_list>li>span>b{
+				border: 8px solid transparent;
+				border-top: 11px solid #F37530;
+				position: absolute;
+				bottom: -18px;
+				left: 40%;
+			}
+			#main .main_inner .district .API_download>li ul.version>li{
+				width: 92px;
+				font-size: 14px;
+				margin-right: 10px;
+				border: 1px solid #D7D4D4;
+			}
+			#main .main_inner .district .API_download>li ul.version>li.active{
+				color: #fff;
+				background: #F37530;
+				border: none;
+			}
+			#main .main_inner .district .API_download>li ul.coordinate>li{
+				width: 92px;
+				font-size: 14px;
+				margin-right: 10px;
+				border: 1px solid #D7D4D4;
+			}
+			#main .main_inner .district .API_download>li ul.coordinate>li.active{
+				color: #fff;
+				background: #F37530;
+				border: none;
+			}
+			#main .main_inner .district .API_download>li ul.auto_width>li{
+				width: auto;
+				padding: 0 8px;
+			}
+			#main .main_inner .district li.district_download_pay{
+				position: relative;
+			}
+			#main .main_inner .district li>p.warning{
+				border: 1px solid #fda89e;
+				font-size: 12px;
+				width: 253px;
+				height: 25px;
+				color: #ff4b33;
+				position: absolute;
+				line-height: 25px;
+				position: absolute;
+				left: 640px;
+				top: 85px;
+			}
+			#main .main_inner .district li>p.warning>img{
+				vertical-align: middle;
+				margin-bottom: 3px;
+				margin-left: 12px;
+				margin-right: 6px;
+			}
+			#main .main_inner .scene>li.no_padding{
+				padding-top: 2px;
+				padding-bottom: 2px;
+				padding-left: 0;
+				padding-right: 0;
+				cursor: pointer;
+			}
+			#main .main_inner .scene>li>h2{
+				color: #000;
+				font-size: 24px;
+				padding: 30px 0 30px 10px;
+				background: #F2F2F2;
+			}
+			#main .main_inner .scene>li>h2>i{
+				color: #545454;
+				font-size:24px;
+				margin-left: 20px;
+			}
+			#main .main_inner .scene>li>ul>li{
+				width: 50px;
+			}
+			#main .main_inner .scene li ul.scene_provide>li{
+				width: 80px;
+			}
+			#main .main_inner .scene li ul>li.no_top{
+				border-top: none;
+			}
+			#main .main_inner .scene li .scenechoose_right{
+				display: inline-block;
+			    width: 820px;
+			    padding: 35px 0;
+			    border-bottom: 1px solid #F0F0F0;
+			}
+			/*购物车按钮样式*/
+			#main .cart_button{
+				width: 69px;
+				height: 194px;
+				background: #0d99fe;
+				position: fixed;
+				right: 0;
+				top: 330px;
+				padding: 30px 0;
+				text-align: center;
+				vertical-align: middle;
+				font-size: 16px;
+				line-height: 28px;
+				cursor: pointer;
+			}
+			#main .cart_button .inner{
+				width: 26px;
+				margin: 0 auto;
+				text-align: center;
+				color: #fff;
+			}
+			#main .cart_button .inner>i{
+				font-size: 26px;
+			}
+			#main .cart_button .inner>span{
+				color: #fffc01;
+			}
+			/*购物车详细内容样式*/
+			.cart{
+				width: 262px;
+				background: #fff;
+				position: fixed;
+				top: 300px;
+				right: -262px;
+			}
+			.cart>h2{
+				padding: 0 17px;
+				color: #434343;
+				line-height: 46px;
+				cursor: pointer;
+				font-size: 13px;
+				border-bottom: 1px solid #d1d1d1;
+			}
+			.cart>h2>i{
+				color: #ababab;
+				font-size: 25px;
+				margin-right: 10px;
+			}
+			.cart>h2>span{
+				float: right;
+				font-size: 24px;
+				color: #3c3c3c;
+			}
+			.cart .content{
+				height: 321px;
+				overflow-y: auto;
+				border-bottom: 1px solid #d1d1d1;
+			}
+			.cart .content>li{
+				padding: 0 20px 20px 20px;
+				border-bottom: 1px solid #d1d1d1;
+				list-style: none;
+			}
+			.cart .content>li.null{
+				width: 100%;
+				height: 179px;
+				color: #545454;
+				text-align: center;
+				line-height: 179px;
+				font-size: 14px;
+				border-bottom: none;
+			}
+			.cart .content>li>h2{
+				padding: 12px 0;
+				font-size: 18px;
+				color: #222222;
+				line-height: 24px;
+			}
+			.cart .content>li>h2>span{
+				display: none;
+			}
+			.cart .content>li>h2>i{
+				font-size: 24px;
+				float: right;
+				color: #ababab;
+				vertical-align: middle;
+				cursor: pointer;
+			}
+			.cart .content>li>p{
+				font-size: 14px;
+				color: #434343;
+				padding-bottom: 8px;
+			}
+			.cart .content>li>p>em{
+				color: #f37530;
+			}
+			.cart .cart_pay{
+				padding: 20px 0;
+				text-align: center;
+			}
+			.cart .cart_pay>p{
+				color: #434343;
+				padding-bottom: 15px;
+			}
+			.cart .cart_pay>p>em{
+				color: #f37530;
+			}
+			.cart .cart_pay>a{
+				outline: none;
+				border: none;
+				background: #F37530;
+				border-radius: 5px;
+				font-size: 14px;
+				color: #fff;
+				padding: 6px 45px;
+				cursor: pointer;
+			}
+			/*.street{
+				display: none;
+			}*/
+			.scene{
+				display: none;
+			}
+			.district{
+				display: none;
+			}
+			.district .API_download{
+				display: none;
+			}
+			.scene .API_download{
+				display: none;
+			}
+			.district_download_pay{
+				display: none;
+			}
+			.district_download2_pay{
+				display: none;
+			}
+			.district_history{
+				display: none;
+			}
+			.scene_download_pay{
+				display: none;
+			}
+			.scene_download_single_list li span{
+				display: none;
+			}
+			.scene_download_single_list li.active span{
+				display: block;
+			}
+			.scene_download_more_list li span{
+				display: none;
+			}
+			.scene_download_more_list li.active span{
+				display: block;
+			}
+
+			/*2017/10/25改版 添加：配置信息*/
+			#main .main_inner .district .API_download>li.API_download_configure{
+				color: #363636;
+			    list-style: none;
+			    padding: 40px 0px 40px 10px;
+			    font-size: 16px;
+			    border-bottom: 1px solid #f0f0f0;
+			    overflow: hidden;
+			}
+			#main .main_inner .right li .configure_title{
+				    margin-right: 50px;
+				    font-weight: 700;
+				    color: #363636;
+				    line-height: 36px;
+			}
+			#main .main_inner .district .API_download>li.API_download_configure table tr td{
+				padding: 8px 30px;
+			}
+			#main .main_inner .district .API_download>li.API_download_configure table tr td:first-child{
+				padding: 0;
+				text-align: center;
+				height: 48px;
+				width: 105px;
+				line-height: 48px;
+			}

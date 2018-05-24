@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+          http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+          http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd">
+
+    <!--配置SpringMVC-->
+    <!--开启SpringMVC注解模式,提供数据绑定,数字和日期格式化,xml,json支持-->
+    <mvc:annotation-driven/>
+
+    <!--静态资源默认Servlet配置-->
+    <mvc:default-servlet-handler/>
+    <mvc:resources location="/statics/" mapping="/statics/**"/>
+    <mvc:resources location="/statics" mapping="/statics/**"/>
+    <!--<mvc:view-controller path="/" view-name="redirect:/product/list" />-->
+
+    <!--配置jsp-->
+    <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+        <property name="viewClass" value="org.springframework.web.servlet.view.JstlView"/>
+        <property name="prefix" value="/WEB-INF/view/"/>
+        <property name="suffix" value=".jsp"/>
+    </bean>
+    <!-- 文件上传 -->
+    <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver"
+          p:defaultEncoding="UTF-8"/>
+
+    <context:component-scan base-package="com.ipplus360.web"/>
+    <mvc:interceptors>
+        <mvc:interceptor>
+            <mvc:mapping path="/**"/>
+            <mvc:exclude-mapping path="/user/login/**"/>
+            <mvc:exclude-mapping path="/info"/>
+            <mvc:exclude-mapping path="/user/active/**"/>
+            <mvc:exclude-mapping path="/pros/**"/>
+            <mvc:exclude-mapping path="/include/**"/>
+            <mvc:exclude-mapping path="/product/**"/>
+            <mvc:exclude-mapping path="/order/protocol"/>
+            <mvc:exclude-mapping path="/company/protocol"/>
+            <mvc:exclude-mapping path="/alipay/notify/**"/>
+            <mvc:exclude-mapping path="/login/**"/>
+            <mvc:exclude-mapping path="/user/toLogin/**"/>
+            <mvc:exclude-mapping path="/user/reg/**"/>
+            <mvc:exclude-mapping path="/user/toReg/**"/>
+            <mvc:exclude-mapping path="/user/help/**"/>
+            <mvc:exclude-mapping path="/test/reg/**"/>
+            <mvc:exclude-mapping path="/user/forget/**"/>
+            <mvc:exclude-mapping path="/user/forgetPassword/**"/>
+            <mvc:exclude-mapping path="/user/resetPassword/**"/>
+            <mvc:exclude-mapping path="/user/sendCode/**"/>
+            <mvc:exclude-mapping path="/user/sendSms/**"/>
+            <mvc:exclude-mapping path="/user/sendSmsForPws/**"/>
+            <mvc:exclude-mapping path="/user/logout/**"/>
+            <mvc:exclude-mapping path="/user/isOrgEmail/**"/>
+            <mvc:exclude-mapping path="/user/resetPwd/**"/>
+            <mvc:exclude-mapping path="/user/setNewPwd/**"/>
+            <mvc:exclude-mapping path="/user/resetPassword/**"/>
+            <mvc:exclude-mapping path="/user/checkCode/**"/>
+            <mvc:exclude-mapping path="/user/checkMobileCode/**"/>
+            <mvc:exclude-mapping path="/user/protocol"/>
+            <mvc:exclude-mapping path="/user/activity"/>
+            <mvc:exclude-mapping path="/cart/checkout"/>
+            <mvc:exclude-mapping path="/ip/locate/api"/>
+            <mvc:exclude-mapping path="/ip/district/api"/>
+            <mvc:exclude-mapping path="/ip/scene/api"/>
+            <mvc:exclude-mapping path="/ip/**"/>
+            <mvc:exclude-mapping path="/captcha/**"/>
+            <mvc:exclude-mapping path="/statics/**"/>
+            <mvc:exclude-mapping path="/"/>
+            <bean class="com.ipplus360.web.interceptor.LoginInterceptor"/>
+        </mvc:interceptor>
+    </mvc:interceptors>
+
+</beans>

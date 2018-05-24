@@ -1,0 +1,66 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+    <meta http-equiv="content-type" content="text/html;charset=utf8">
+    <style type="text/css">
+        .order{ width:100%; border-left:#C8B9AE solid 1px;border-top:#C8B9AE solid 1px;border-collapse:collapse;}
+        .order td{width:16%;border-right:#C8B9AE solid 1px;border-bottom:#C8B9AE solid 1px;background-color: #D7D1CB;padding:10px 10px 6px;vertical-align: top;}
+    </style>
+</head>
+<body>
+    <h3>共有新注册用户：${newUsers!}</h3>
+    <h3>订单列表 共有${orders?size!}条记录</h3>
+    <table class="order">
+        <thead>
+            <tr>
+                <th>用户</th>
+                <th>付款方式</th>
+                <th>价格</th>
+                <th>下单时间</th>
+                <th>注册时间</th>
+                <th>当天注册</th>
+            </tr>
+        </thead>
+        <tbody>
+        <#list orders as order>
+            <tr>
+                <td>${order.email!}</td>
+                <td>
+                    <#if order.paymentMethod == 0><font color="#d2691e">在线支付</font>
+                    <#else>线下支付
+                    </#if>
+                </td>
+                <td>${order.price!}元</td>
+                <td>${order.dateUpdated?datetime}</td>
+                <td>${order.dateCreated?datetime}</td>
+                <td><#if order.newUser!><font color="green">是</font><#else>否</#if></td>
+            </tr>
+        </#list>
+        </tbody>
+    </table>
+    <br /><br />
+    <hr>
+    <h3>下载列表 共有${downloadOrders?size}条记录(已去重)</h3>
+    <table class="order">
+        <thead>
+        <tr>
+            <th>用户</th>
+            <th>IP</th>
+            <th>下载时间</th>
+            <th>当天注册</th>
+        </tr>
+        </thead>
+        <tbody>
+        <#list downloadOrders as order>
+            <tr>
+                <td>${order.email!}</td>
+                <td>${order.ip!}</td>
+                <td>${order.dateCreated?datetime}</td>
+                <td><#if order.newUser!><font color="green">是</font><#else>否</#if></td>
+            </tr>
+        </#list>
+        </tbody>
+    </table>
+    <br><br>
+</body>
+</html>
